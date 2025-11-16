@@ -10,20 +10,70 @@ const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
 
 /**
+ * Create custom artistic marker icon
+ */
+function createArtisticIcon() {
+    const svgIcon = `
+        <svg width="40" height="50" viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                    <feOffset dx="0" dy="2" result="offsetblur"/>
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.3"/>
+                    </feComponentTransfer>
+                    <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <!-- Outer glow -->
+            <ellipse cx="20" cy="45" rx="12" ry="4" fill="rgba(139, 69, 19, 0.2)"/>
+            <!-- Pin shape -->
+            <path d="M20 2 C12 2, 6 8, 6 16 C6 24, 20 42, 20 42 C20 42, 34 24, 34 16 C34 8, 28 2, 20 2 Z"
+                  fill="url(#pinGradient)"
+                  stroke="#5d2e0f"
+                  stroke-width="2"
+                  filter="url(#shadow)"/>
+            <!-- Inner circle -->
+            <circle cx="20" cy="16" r="6" fill="rgba(255, 255, 255, 0.9)" stroke="#8b4513" stroke-width="1.5"/>
+            <!-- Center dot -->
+            <circle cx="20" cy="16" r="3" fill="#8b4513"/>
+            <defs>
+                <linearGradient id="pinGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#d4a574;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#c08552;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#8b4513;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    `;
+
+    return L.divIcon({
+        className: 'custom-pin',
+        html: svgIcon,
+        iconSize: [40, 50],
+        iconAnchor: [20, 45],
+        popupAnchor: [0, -45]
+    });
+}
+
+/**
  * Initialize the map
  */
 function initMap() {
     // Create map centered on world view
     map = L.map('map').setView([20, 0], 2);
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-        minZoom: 2
+    // Add Stamen Watercolor tiles for artistic look
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg', {
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
+        maxZoom: 16,
+        minZoom: 1
     }).addTo(map);
 
-    console.log('Map initialized');
+    console.log('Map initialized with watercolor tiles');
 }
 
 /**
@@ -85,8 +135,10 @@ function addMarkersToMap(data) {
             return;
         }
 
-        // Create marker
-        const marker = L.marker([latitude, longitude])
+        // Create marker with custom artistic icon
+        const marker = L.marker([latitude, longitude], {
+            icon: createArtisticIcon()
+        })
             .addTo(map)
             .bindPopup(`<b>${title || 'Untitled'}</b>`)
             .on('click', () => {
