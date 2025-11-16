@@ -444,7 +444,6 @@ function addMarkersToMap(data) {
             icon: createArtisticIcon()
         })
             .addTo(map)
-            .bindPopup(`<b>${title}</b>`)
             .on('click', () => {
                 openModal({
                     id: id || index,
