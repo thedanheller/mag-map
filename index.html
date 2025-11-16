@@ -17,27 +17,46 @@
     <!-- Map Container -->
     <div id="map"></div>
 
+    <!-- Logo Circle (Top Left) -->
+    <div id="logo-circle" class="logo-circle" title="About this map">
+        <div class="logo-placeholder"></div>
+    </div>
+
     <!-- Loading Indicator -->
     <div id="loading" class="loading">
         <div class="loading-spinner"></div>
         <p>Loading map data...</p>
     </div>
 
-    <!-- Modal -->
+    <!-- Welcome Modal -->
+    <div id="welcome-modal" class="modal welcome-modal" style="display: none;">
+        <div class="modal-content welcome-content">
+            <span class="close-button welcome-close">&times;</span>
+            <h2 id="welcome-title"></h2>
+            <div class="modal-body">
+                <div id="welcome-image-container" class="image-container">
+                    <img id="welcome-image" src="" alt="">
+                </div>
+                <div id="welcome-text" class="welcome-text"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Marker Modal -->
     <div id="modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
             <h2 id="modal-title"></h2>
             <div class="modal-body">
-                <div id="modal-image-container" class="image-container">
-                    <img id="modal-image" src="" alt="">
-                </div>
-                <div id="modal-description" class="description"></div>
                 <div id="modal-audio-container" class="audio-container">
                     <audio id="modal-audio" controls>
                         Your browser does not support the audio element.
                     </audio>
                 </div>
+                <div id="modal-image-container" class="image-container">
+                    <img id="modal-image" src="" alt="">
+                </div>
+                <div id="modal-description" class="description"></div>
             </div>
         </div>
     </div>

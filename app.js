@@ -8,6 +8,172 @@ let map;
 let markers = [];
 const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
+const welcomeModal = document.getElementById('welcome-modal');
+const logoCircle = document.getElementById('logo-circle');
+
+/**
+ * Load and display welcome content from CSV
+ */
+async function loadWelcomeContent() {
+    try {
+        const response = await fetch('data/welcome.csv');
+
+        if (!response.ok) {
+            console.warn('Welcome CSV not found, skipping welcome modal');
+            return;
+        }
+
+        const csvText = await response.text();
+
+        Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                if (results.data.length > 0) {
+                    const welcomeData = results.data[0];
+                    displayWelcomeModal(welcomeData);
+                }
+            },
+            error: function(error) {
+                console.error('Error parsing welcome CSV:', error);
+            }
+        });
+    } catch (error) {
+        console.error('Error loading welcome CSV:', error);
+    }
+}
+
+/**
+ * Display welcome modal with content
+ */
+function displayWelcomeModal(data) {
+    const { title, content, image } = data;
+
+    // Set title
+    document.getElementById('welcome-title').textContent = title || 'Welcome';
+
+    // Set text content
+    const textEl = document.getElementById('welcome-text');
+    if (content) {
+        textEl.textContent = content;
+        textEl.classList.remove('hidden');
+    } else {
+        textEl.classList.add('hidden');
+    }
+
+    // Set image
+    const imageContainer = document.getElementById('welcome-image-container');
+    const imageEl = document.getElementById('welcome-image');
+    if (image && image.trim()) {
+        imageEl.src = image.trim();
+        imageEl.alt = title || 'Welcome';
+        imageContainer.classList.remove('hidden');
+
+        // Handle image load error
+        imageEl.onerror = () => {
+            console.warn(`Failed to load welcome image: ${image}`);
+            imageContainer.classList.add('hidden');
+        };
+    } else {
+        imageContainer.classList.add('hidden');
+    }
+
+    // Show modal
+    openWelcomeModal();
+}
+
+/**
+ * Open welcome modal
+ */
+function openWelcomeModal() {
+    welcomeModal.classList.add('show');
+    welcomeModal.style.display = 'flex';
+}
+
+/**
+ * Close welcome modal
+ */
+function closeWelcomeModal() {
+    welcomeModal.classList.remove('show');
+    welcomeModal.style.display = 'none';
+}
+
+/**
+ * Setup welcome modal event listeners
+ */
+function setupWelcomeModalEvents() {
+    const closeButton = document.querySelector('.welcome-close');
+
+    // Close button click
+    closeButton.addEventListener('click', closeWelcomeModal);
+
+    // Click outside modal content
+    welcomeModal.addEventListener('click', (e) => {
+        if (e.target === welcomeModal) {
+            closeWelcomeModal();
+        }
+    });
+
+    // Logo circle click - reopen welcome modal
+    logoCircle.addEventListener('click', openWelcomeModal);
+
+    // Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && welcomeModal.style.display === 'flex') {
+            closeWelcomeModal();
+        }
+    });
+}
+
+/**
+ * Create custom artistic marker icon
+ */
+function createArtisticIcon() {
+    const svgIcon = `
+        <svg width="40" height="50" viewBox="0 0 40 50" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+                    <feGaussianBlur in="SourceAlpha" stdDeviation="2"/>
+                    <feOffset dx="0" dy="2" result="offsetblur"/>
+                    <feComponentTransfer>
+                        <feFuncA type="linear" slope="0.3"/>
+                    </feComponentTransfer>
+                    <feMerge>
+                        <feMergeNode/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+            <!-- Outer glow -->
+            <ellipse cx="20" cy="45" rx="12" ry="4" fill="rgba(139, 69, 19, 0.2)"/>
+            <!-- Pin shape -->
+            <path d="M20 2 C12 2, 6 8, 6 16 C6 24, 20 42, 20 42 C20 42, 34 24, 34 16 C34 8, 28 2, 20 2 Z"
+                  fill="url(#pinGradient)"
+                  stroke="#5d2e0f"
+                  stroke-width="2"
+                  filter="url(#shadow)"/>
+            <!-- Inner circle -->
+            <circle cx="20" cy="16" r="6" fill="rgba(255, 255, 255, 0.9)" stroke="#8b4513" stroke-width="1.5"/>
+            <!-- Center dot -->
+            <circle cx="20" cy="16" r="3" fill="#8b4513"/>
+            <defs>
+                <linearGradient id="pinGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+                    <stop offset="0%" style="stop-color:#d4a574;stop-opacity:1" />
+                    <stop offset="50%" style="stop-color:#c08552;stop-opacity:1" />
+                    <stop offset="100%" style="stop-color:#8b4513;stop-opacity:1" />
+                </linearGradient>
+            </defs>
+        </svg>
+    `;
+
+    return L.divIcon({
+        className: 'custom-pin',
+        html: svgIcon,
+        iconSize: [40, 50],
+        iconAnchor: [20, 45],
+        popupAnchor: [0, -45]
+    });
+}
 
 /**
  * Initialize the map
@@ -16,14 +182,30 @@ function initMap() {
     // Create map centered on world view
     map = L.map('map').setView([20, 0], 2);
 
-    // Add OpenStreetMap tiles
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors',
-        maxZoom: 19,
-        minZoom: 2
+    // Add Stamen Watercolor tiles for artistic look (base layer)
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg', {
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
+        maxZoom: 16,
+        minZoom: 1
     }).addTo(map);
 
-    console.log('Map initialized');
+    // Add country borders overlay (Stamen Toner Lines)
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lines/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
+        maxZoom: 16,
+        minZoom: 1,
+        opacity: 0.4
+    }).addTo(map);
+
+    // Add country labels overlay (Stamen Toner Labels)
+    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png', {
+        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
+        maxZoom: 16,
+        minZoom: 1,
+        opacity: 0.5
+    }).addTo(map);
+
+    console.log('Map initialized with watercolor tiles and country borders');
 }
 
 /**
@@ -85,8 +267,10 @@ function addMarkersToMap(data) {
             return;
         }
 
-        // Create marker
-        const marker = L.marker([latitude, longitude])
+        // Create marker with custom artistic icon
+        const marker = L.marker([latitude, longitude], {
+            icon: createArtisticIcon()
+        })
             .addTo(map)
             .bindPopup(`<b>${title || 'Untitled'}</b>`)
             .on('click', () => {
@@ -218,7 +402,9 @@ function init() {
     console.log('Initializing application...');
     initMap();
     setupModalEvents();
+    setupWelcomeModalEvents();
     loadCSV();
+    loadWelcomeContent();
 }
 
 // Start the application when DOM is ready
