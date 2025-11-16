@@ -199,7 +199,11 @@ function createArtisticIcon() {
  */
 function initMap() {
     // Create map centered on world view
-    map = L.map('map').setView([20, 0], 2);
+    // Disable default zoom control (top-left) to avoid overlap with logo
+    map = L.map('map', { zoomControl: false }).setView([20, 0], 2);
+
+    // Add zoom control to bottom-right corner
+    L.control.zoom({ position: 'bottomright' }).addTo(map);
 
     if (USE_ARTISTIC_MAP) {
 
