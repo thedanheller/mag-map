@@ -11,6 +11,11 @@ const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
 const logoCircle = document.getElementById('logo-circle');
 
+// MAP CONFIGURATION
+// Set to true for beautiful watercolor map (requires free Stadia API key - 25k views/month)
+// Set to false for simple free map (unlimited, no API key needed)
+const USE_ARTISTIC_MAP = true;
+
 /**
  * Load and display welcome content from CSV
  */
@@ -196,36 +201,50 @@ function initMap() {
     // Create map centered on world view
     map = L.map('map').setView([20, 0], 2);
 
-    // STADIA MAPS API KEY
-    // Sign up for free at: https://client.stadiamaps.com/signup/
-    // Free tier: 25,000 map views/month (no credit card required)
-    // Replace 'YOUR_API_KEY_HERE' with your actual API key
-    const stadiaApiKey = 'YOUR_API_KEY_HERE';
+    if (USE_ARTISTIC_MAP) {
+        // OPTION 1: ARTISTIC WATERCOLOR MAP (Stadia Maps)
+        // Sign up for free at: https://client.stadiamaps.com/signup/
+        // Free tier: 25,000 map views/month (no credit card required)
+        // Replace 'YOUR_API_KEY_HERE' with your actual API key
+        const stadiaApiKey = 'YOUR_API_KEY_HERE';
 
-    // Add Stamen Watercolor tiles for artistic look (base layer)
-    L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=${stadiaApiKey}`, {
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
-        maxZoom: 16,
-        minZoom: 1
-    }).addTo(map);
+        // Add Stamen Watercolor tiles for artistic look (base layer)
+        L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=${stadiaApiKey}`, {
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
+            maxZoom: 16,
+            minZoom: 1
+        }).addTo(map);
 
-    // Add country borders overlay (Stamen Toner Lines)
-    L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_lines/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
-        maxZoom: 16,
-        minZoom: 1,
-        opacity: 0.4
-    }).addTo(map);
+        // Add country borders overlay (Stamen Toner Lines)
+        L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_lines/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
+            maxZoom: 16,
+            minZoom: 1,
+            opacity: 0.4
+        }).addTo(map);
 
-    // Add country labels overlay (Stamen Toner Labels)
-    L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
-        maxZoom: 16,
-        minZoom: 1,
-        opacity: 0.5
-    }).addTo(map);
+        // Add country labels overlay (Stamen Toner Labels)
+        L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
+            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
+            maxZoom: 16,
+            minZoom: 1,
+            opacity: 0.5
+        }).addTo(map);
 
-    console.log('Map initialized with watercolor tiles and country borders');
+        console.log('Map initialized with artistic watercolor tiles and country borders');
+    } else {
+        // OPTION 2: FREE MAP (CartoDB - Unlimited, No API Key)
+        // This is a simple, clean map with country borders included
+        // Completely free with no usage limits
+        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+            subdomains: 'abcd',
+            maxZoom: 20,
+            minZoom: 1
+        }).addTo(map);
+
+        console.log('Map initialized with free CartoDB tiles');
+    }
 }
 
 /**
