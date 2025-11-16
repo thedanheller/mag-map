@@ -1,0 +1,4 @@
+id,title,lat,lng,description,image,audio
+1,Eiffel Tower,48.8584,2.2945,The iconic iron lattice tower located on the Champ de Mars in Paris. Built in 1889 for the World's Fair.,media/images/eiffel-tower.jpg,media/audio/eiffel-tower.mp3
+2,Statue of Liberty,40.6892,-74.0445,A colossal neoclassical sculpture on Liberty Island in New York Harbor. A gift from France dedicated in 1886.,media/images/statue-of-liberty.jpg,media/audio/statue-of-liberty.mp3
+3,Sydney Opera House,-33.8568,151.2153,A multi-venue performing arts centre in Sydney. Designed by Danish architect Jørn Utzon and opened in 1973.,media/images/sydney-opera-house.jpg,media/audio/sydney-opera-house.mp3

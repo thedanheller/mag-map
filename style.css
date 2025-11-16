@@ -1,0 +1,227 @@
+/* Reset and Base Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+/* Map Container - Full Screen */
+#map {
+    height: 100vh;
+    width: 100vw;
+    z-index: 1;
+}
+
+/* Loading Indicator */
+.loading {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    text-align: center;
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.loading-spinner {
+    border: 4px solid #f3f3f3;
+    border-top: 4px solid #3498db;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 1rem;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Modal Styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0, 0, 0, 0.6);
+    animation: fadeIn 0.3s;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; }
+    to { opacity: 1; }
+}
+
+.modal.show {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background-color: #fff;
+    margin: auto;
+    padding: 0;
+    border-radius: 8px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+    animation: slideIn 0.3s;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateY(-50px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.close-button {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #666;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    background: white;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    transition: all 0.2s;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: #000;
+    background: #f0f0f0;
+}
+
+.modal-content h2 {
+    padding: 2rem 2rem 1rem;
+    color: #333;
+    font-size: 1.75rem;
+    border-bottom: 2px solid #f0f0f0;
+    margin-bottom: 0;
+}
+
+.modal-body {
+    padding: 1.5rem 2rem 2rem;
+}
+
+/* Image Container */
+.image-container {
+    margin-bottom: 1.5rem;
+    text-align: center;
+}
+
+.image-container img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 6px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.image-container.hidden {
+    display: none;
+}
+
+/* Description */
+.description {
+    margin-bottom: 1.5rem;
+    color: #555;
+    line-height: 1.6;
+    font-size: 1rem;
+}
+
+.description.hidden {
+    display: none;
+}
+
+/* Audio Container */
+.audio-container {
+    width: 100%;
+}
+
+.audio-container.hidden {
+    display: none;
+}
+
+.audio-container audio {
+    width: 100%;
+    border-radius: 4px;
+    outline: none;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .modal-content {
+        width: 95%;
+        max-height: 95vh;
+    }
+
+    .modal-content h2 {
+        font-size: 1.5rem;
+        padding: 1.5rem 1.5rem 0.75rem;
+    }
+
+    .modal-body {
+        padding: 1rem 1.5rem 1.5rem;
+    }
+
+    .close-button {
+        top: 10px;
+        right: 15px;
+        width: 30px;
+        height: 30px;
+        font-size: 24px;
+    }
+}
+
+/* Custom Marker Popup Styles */
+.leaflet-popup-content-wrapper {
+    border-radius: 6px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.leaflet-popup-content {
+    margin: 12px 16px;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
+/* Marker Cluster Styles (if needed in future) */
+.marker-cluster {
+    background-color: rgba(52, 152, 219, 0.6);
+}
+
+.marker-cluster div {
+    background-color: rgba(52, 152, 219, 0.8);
+}
