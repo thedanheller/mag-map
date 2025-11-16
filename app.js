@@ -11,9 +11,17 @@ const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
 const logoCircle = document.getElementById('logo-circle');
 const languageSelect = document.getElementById('language-select');
+const welcomeLanguageSelect = document.getElementById('welcome-language-select');
 
 // Current selected language (default to Portuguese)
 let currentLanguage = 'pt_br';
+
+// Map locale configuration
+const localeMap = {
+    'pt_br': 'pt',
+    'es_es': 'es',
+    'en_us': 'en'
+};
 
 // MAP CONFIGURATION
 // Set to true for beautiful watercolor map (requires free Stadia API key - 25k views/month)
@@ -21,7 +29,7 @@ let currentLanguage = 'pt_br';
 const USE_ARTISTIC_MAP = true;
 
 /**
- * Load languages from CSV and populate dropdown
+ * Load languages from CSV and populate dropdowns
  */
 async function loadLanguages() {
     try {
@@ -38,22 +46,34 @@ async function loadLanguages() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                // Clear loading option
+                // Clear loading options from both dropdowns
                 languageSelect.innerHTML = '';
+                welcomeLanguageSelect.innerHTML = '';
 
-                // Populate dropdown with languages
+                // Populate both dropdowns with languages
                 results.data.forEach(lang => {
-                    const option = document.createElement('option');
-                    option.value = lang.id;
-                    option.textContent = lang.name;
+                    // Top-right dropdown
+                    const option1 = document.createElement('option');
+                    option1.value = lang.id;
+                    option1.textContent = lang.name;
                     if (lang.id === currentLanguage) {
-                        option.selected = true;
+                        option1.selected = true;
                     }
-                    languageSelect.appendChild(option);
+                    languageSelect.appendChild(option1);
+
+                    // Welcome modal dropdown
+                    const option2 = document.createElement('option');
+                    option2.value = lang.id;
+                    option2.textContent = lang.name;
+                    if (lang.id === currentLanguage) {
+                        option2.selected = true;
+                    }
+                    welcomeLanguageSelect.appendChild(option2);
                 });
 
-                // Add change event listener
+                // Add change event listeners to both dropdowns
                 languageSelect.addEventListener('change', handleLanguageChange);
+                welcomeLanguageSelect.addEventListener('change', handleWelcomeLanguageChange);
             },
             error: function(error) {
                 console.error('Error parsing languages CSV:', error);
@@ -65,15 +85,41 @@ async function loadLanguages() {
 }
 
 /**
- * Handle language change
+ * Handle language change from top-right dropdown
  */
 function handleLanguageChange(e) {
     currentLanguage = e.target.value;
 
+    // Sync the welcome modal dropdown
+    welcomeLanguageSelect.value = currentLanguage;
+
+    // Reload content
+    reloadContent();
+}
+
+/**
+ * Handle language change from welcome modal dropdown
+ */
+function handleWelcomeLanguageChange(e) {
+    currentLanguage = e.target.value;
+
+    // Sync the top-right dropdown
+    languageSelect.value = currentLanguage;
+
+    // Reload content
+    reloadContent();
+}
+
+/**
+ * Reload all content with current language
+ */
+function reloadContent() {
     // Reload welcome content and markers
     loadWelcomeContent();
     clearMarkers();
     loadCSV();
+
+    console.log(`Language changed to: ${currentLanguage}`);
 }
 
 /**
@@ -371,6 +417,8 @@ function addMarkersToMap(data) {
         const title = row[`title_${currentLanguage}`] || row.title_en_us || row.title || 'Untitled';
         const description = row[`description_${currentLanguage}`] || row.description_en_us || row.description || '';
         const { id, lat, lng, image, audio } = row;
+
+        console.log(`Marker ${index + 1} (${currentLanguage}): ${title}`);
 
         // Validate required fields
         if (!lat || !lng) {
