@@ -332,6 +332,10 @@ function initMap() {
     // Replace 'YOUR_API_KEY_HERE' with your actual API key
     const stadiaApiKey = '17d026a2-4644-42f2-922d-5fff5e6a1559';
 
+        // NOTE: Stamen Watercolor tiles are pre-rendered and don't support language switching
+        // The labels are baked into the images (typically in English)
+        // For multilingual support, you would need to use Mapbox or similar services
+
         // Add Stamen Watercolor tiles for artistic look (base layer)
         L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=${stadiaApiKey}`, {
             attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
@@ -347,7 +351,7 @@ function initMap() {
             opacity: 0.4
         }).addTo(map);
 
-        // Add country labels overlay (Stamen Toner Labels)
+        // Add country labels overlay (Stamen Toner Labels - English only, pre-rendered)
         L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
             attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
             maxZoom: 16,
@@ -355,7 +359,7 @@ function initMap() {
             opacity: 0.5
         }).addTo(map);
 
-        console.log('Map initialized with artistic watercolor tiles and country borders');
+        console.log('Map initialized with artistic watercolor tiles (labels in English only)');
     } else {
         // OPTION 2: FREE MAP (CartoDB - Unlimited, No API Key)
         // This is a simple, clean map with country borders included
