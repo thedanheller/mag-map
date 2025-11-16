@@ -8,6 +8,122 @@ let map;
 let markers = [];
 const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
+const welcomeModal = document.getElementById('welcome-modal');
+const logoCircle = document.getElementById('logo-circle');
+
+/**
+ * Load and display welcome content from CSV
+ */
+async function loadWelcomeContent() {
+    try {
+        const response = await fetch('data/welcome.csv');
+
+        if (!response.ok) {
+            console.warn('Welcome CSV not found, skipping welcome modal');
+            return;
+        }
+
+        const csvText = await response.text();
+
+        Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                if (results.data.length > 0) {
+                    const welcomeData = results.data[0];
+                    displayWelcomeModal(welcomeData);
+                }
+            },
+            error: function(error) {
+                console.error('Error parsing welcome CSV:', error);
+            }
+        });
+    } catch (error) {
+        console.error('Error loading welcome CSV:', error);
+    }
+}
+
+/**
+ * Display welcome modal with content
+ */
+function displayWelcomeModal(data) {
+    const { title, content, image } = data;
+
+    // Set title
+    document.getElementById('welcome-title').textContent = title || 'Welcome';
+
+    // Set text content
+    const textEl = document.getElementById('welcome-text');
+    if (content) {
+        textEl.textContent = content;
+        textEl.classList.remove('hidden');
+    } else {
+        textEl.classList.add('hidden');
+    }
+
+    // Set image
+    const imageContainer = document.getElementById('welcome-image-container');
+    const imageEl = document.getElementById('welcome-image');
+    if (image && image.trim()) {
+        imageEl.src = image.trim();
+        imageEl.alt = title || 'Welcome';
+        imageContainer.classList.remove('hidden');
+
+        // Handle image load error
+        imageEl.onerror = () => {
+            console.warn(`Failed to load welcome image: ${image}`);
+            imageContainer.classList.add('hidden');
+        };
+    } else {
+        imageContainer.classList.add('hidden');
+    }
+
+    // Show modal
+    openWelcomeModal();
+}
+
+/**
+ * Open welcome modal
+ */
+function openWelcomeModal() {
+    welcomeModal.classList.add('show');
+    welcomeModal.style.display = 'flex';
+}
+
+/**
+ * Close welcome modal
+ */
+function closeWelcomeModal() {
+    welcomeModal.classList.remove('show');
+    welcomeModal.style.display = 'none';
+}
+
+/**
+ * Setup welcome modal event listeners
+ */
+function setupWelcomeModalEvents() {
+    const closeButton = document.querySelector('.welcome-close');
+
+    // Close button click
+    closeButton.addEventListener('click', closeWelcomeModal);
+
+    // Click outside modal content
+    welcomeModal.addEventListener('click', (e) => {
+        if (e.target === welcomeModal) {
+            closeWelcomeModal();
+        }
+    });
+
+    // Logo circle click - reopen welcome modal
+    logoCircle.addEventListener('click', openWelcomeModal);
+
+    // Escape key
+    document.addEventListener('keydown', (e) => {
+        if (e.key === 'Escape' && welcomeModal.style.display === 'flex') {
+            closeWelcomeModal();
+        }
+    });
+}
 
 /**
  * Create custom artistic marker icon
@@ -270,7 +386,9 @@ function init() {
     console.log('Initializing application...');
     initMap();
     setupModalEvents();
+    setupWelcomeModalEvents();
     loadCSV();
+    loadWelcomeContent();
 }
 
 // Start the application when DOM is ready
