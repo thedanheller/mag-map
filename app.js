@@ -381,7 +381,8 @@ function hideLoading() {
  * Setup modal event listeners
  */
 function setupModalEvents() {
-    const closeButton = document.querySelector('.close-button');
+    // Select the close button specifically within the marker modal
+    const closeButton = modal.querySelector('.close-button');
 
     // Close button click
     closeButton.addEventListener('click', closeModal);
