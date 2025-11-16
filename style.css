@@ -19,6 +19,12 @@ body {
     z-index: 1;
 }
 
+/* Artistic filter for map tiles */
+.artistic-tiles {
+    filter: saturate(0.7) sepia(0.15) brightness(1.05) contrast(0.95);
+    opacity: 0.95;
+}
+
 /* Logo Circle (Top Left) */
 .logo-circle {
     position: fixed;
