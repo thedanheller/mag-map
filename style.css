@@ -39,14 +39,7 @@ body {
     transition: all 0.3s ease;
 }
 
-/* Language Selector (Top Right) */
-.language-selector {
-    position: fixed;
-    top: 20px;
-    right: 20px;
-    z-index: 1001;
-}
-
+/* Language Dropdown */
 .language-dropdown {
     font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
     background: linear-gradient(135deg, #fdfcfb 0%, #e8dfd4 100%);
@@ -333,11 +326,6 @@ body {
     .logo-placeholder {
         width: 28px;
         height: 28px;
-    }
-
-    .language-selector {
-        top: 15px;
-        right: 15px;
     }
 
     .language-dropdown {

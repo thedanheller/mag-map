@@ -10,7 +10,6 @@ const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
 const logoCircle = document.getElementById('logo-circle');
-const languageSelect = document.getElementById('language-select');
 const welcomeLanguageSelect = document.getElementById('welcome-language-select');
 
 // Current selected language (default to Portuguese)
@@ -46,34 +45,22 @@ async function loadLanguages() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                // Clear loading options from both dropdowns
-                languageSelect.innerHTML = '';
+                // Clear loading options from dropdown
                 welcomeLanguageSelect.innerHTML = '';
 
-                // Populate both dropdowns with languages
+                // Populate dropdown with languages
                 results.data.forEach(lang => {
-                    // Top-right dropdown
-                    const option1 = document.createElement('option');
-                    option1.value = lang.id;
-                    option1.textContent = lang.name;
+                    const option = document.createElement('option');
+                    option.value = lang.id;
+                    option.textContent = lang.name;
                     if (lang.id === currentLanguage) {
-                        option1.selected = true;
+                        option.selected = true;
                     }
-                    languageSelect.appendChild(option1);
-
-                    // Welcome modal dropdown
-                    const option2 = document.createElement('option');
-                    option2.value = lang.id;
-                    option2.textContent = lang.name;
-                    if (lang.id === currentLanguage) {
-                        option2.selected = true;
-                    }
-                    welcomeLanguageSelect.appendChild(option2);
+                    welcomeLanguageSelect.appendChild(option);
                 });
 
-                // Add change event listeners to both dropdowns
-                languageSelect.addEventListener('change', handleLanguageChange);
-                welcomeLanguageSelect.addEventListener('change', handleWelcomeLanguageChange);
+                // Add change event listener
+                welcomeLanguageSelect.addEventListener('change', handleLanguageChange);
             },
             error: function(error) {
                 console.error('Error parsing languages CSV:', error);
@@ -85,28 +72,10 @@ async function loadLanguages() {
 }
 
 /**
- * Handle language change from top-right dropdown
+ * Handle language change from dropdown
  */
 function handleLanguageChange(e) {
     currentLanguage = e.target.value;
-
-    // Sync the welcome modal dropdown
-    welcomeLanguageSelect.value = currentLanguage;
-
-    // Reload content
-    reloadContent();
-}
-
-/**
- * Handle language change from welcome modal dropdown
- */
-function handleWelcomeLanguageChange(e) {
-    currentLanguage = e.target.value;
-
-    // Sync the top-right dropdown
-    languageSelect.value = currentLanguage;
-
-    // Reload content
     reloadContent();
 }
 
