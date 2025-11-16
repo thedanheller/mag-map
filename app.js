@@ -102,10 +102,17 @@ function closeWelcomeModal() {
  * Setup welcome modal event listeners
  */
 function setupWelcomeModalEvents() {
-    const closeButton = document.querySelector('.welcome-close');
+    const closeButton = welcomeModal.querySelector('.welcome-close');
 
-    // Close button click
-    closeButton.addEventListener('click', closeWelcomeModal);
+    // Close button click - handle both click and touch
+    const handleWelcomeClose = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeWelcomeModal();
+    };
+
+    closeButton.addEventListener('click', handleWelcomeClose);
+    closeButton.addEventListener('touchend', handleWelcomeClose);
 
     // Click outside modal content
     welcomeModal.addEventListener('click', (e) => {
@@ -115,7 +122,14 @@ function setupWelcomeModalEvents() {
     });
 
     // Logo circle click - reopen welcome modal
-    logoCircle.addEventListener('click', openWelcomeModal);
+    const handleLogoClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        openWelcomeModal();
+    };
+
+    logoCircle.addEventListener('click', handleLogoClick);
+    logoCircle.addEventListener('touchend', handleLogoClick);
 
     // Escape key
     document.addEventListener('keydown', (e) => {
@@ -384,8 +398,15 @@ function setupModalEvents() {
     // Select the close button specifically within the marker modal
     const closeButton = modal.querySelector('.close-button');
 
-    // Close button click
-    closeButton.addEventListener('click', closeModal);
+    // Close button click - handle both click and touch
+    const handleClose = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        closeModal();
+    };
+
+    closeButton.addEventListener('click', handleClose);
+    closeButton.addEventListener('touchend', handleClose);
 
     // Click outside modal content
     modal.addEventListener('click', (e) => {
