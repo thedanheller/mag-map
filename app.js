@@ -10,11 +10,81 @@ const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
 const logoCircle = document.getElementById('logo-circle');
+const languageSelect = document.getElementById('language-select');
+
+// Current selected language (default to Portuguese)
+let currentLanguage = 'pt_br';
 
 // MAP CONFIGURATION
 // Set to true for beautiful watercolor map (requires free Stadia API key - 25k views/month)
 // Set to false for simple free map (unlimited, no API key needed)
 const USE_ARTISTIC_MAP = true;
+
+/**
+ * Load languages from CSV and populate dropdown
+ */
+async function loadLanguages() {
+    try {
+        const response = await fetch('data/languages.csv');
+
+        if (!response.ok) {
+            console.warn('Languages CSV not found');
+            return;
+        }
+
+        const csvText = await response.text();
+
+        Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                // Clear loading option
+                languageSelect.innerHTML = '';
+
+                // Populate dropdown with languages
+                results.data.forEach(lang => {
+                    const option = document.createElement('option');
+                    option.value = lang.id;
+                    option.textContent = lang.name;
+                    if (lang.id === currentLanguage) {
+                        option.selected = true;
+                    }
+                    languageSelect.appendChild(option);
+                });
+
+                // Add change event listener
+                languageSelect.addEventListener('change', handleLanguageChange);
+            },
+            error: function(error) {
+                console.error('Error parsing languages CSV:', error);
+            }
+        });
+    } catch (error) {
+        console.error('Error loading languages CSV:', error);
+    }
+}
+
+/**
+ * Handle language change
+ */
+function handleLanguageChange(e) {
+    currentLanguage = e.target.value;
+
+    // Reload welcome content and markers
+    loadWelcomeContent();
+    clearMarkers();
+    loadCSV();
+}
+
+/**
+ * Clear all markers from the map
+ */
+function clearMarkers() {
+    markers.forEach(marker => {
+        map.removeLayer(marker);
+    });
+    markers = [];
+}
 
 /**
  * Load and display welcome content from CSV
@@ -52,10 +122,13 @@ async function loadWelcomeContent() {
  * Display welcome modal with content
  */
 function displayWelcomeModal(data) {
-    const { title, content, image } = data;
+    // Get title and content based on current language
+    const title = data[`title_${currentLanguage}`] || data.title_en_us || 'Welcome';
+    const content = data[`content_${currentLanguage}`] || data.content_en_us || '';
+    const image = data.image;
 
     // Set title
-    document.getElementById('welcome-title').textContent = title || 'Welcome';
+    document.getElementById('welcome-title').textContent = title;
 
     // Set text content
     const textEl = document.getElementById('welcome-text');
@@ -294,7 +367,10 @@ function addMarkersToMap(data) {
     const bounds = [];
 
     data.forEach((row, index) => {
-        const { id, title, lat, lng, description, image, audio } = row;
+        // Get language-specific title and description
+        const title = row[`title_${currentLanguage}`] || row.title_en_us || row.title || 'Untitled';
+        const description = row[`description_${currentLanguage}`] || row.description_en_us || row.description || '';
+        const { id, lat, lng, image, audio } = row;
 
         // Validate required fields
         if (!lat || !lng) {
@@ -316,12 +392,12 @@ function addMarkersToMap(data) {
             icon: createArtisticIcon()
         })
             .addTo(map)
-            .bindPopup(`<b>${title || 'Untitled'}</b>`)
+            .bindPopup(`<b>${title}</b>`)
             .on('click', () => {
                 openModal({
                     id: id || index,
-                    title: title || 'Untitled',
-                    description: description || '',
+                    title: title,
+                    description: description,
                     image: image ? image.trim() : '',
                     audio: audio ? audio.trim() : ''
                 });
@@ -455,6 +531,7 @@ function init() {
     initMap();
     setupModalEvents();
     setupWelcomeModalEvents();
+    loadLanguages();
     loadCSV();
     loadWelcomeContent();
 }
