@@ -182,30 +182,17 @@ function initMap() {
     // Create map centered on world view
     map = L.map('map').setView([20, 0], 2);
 
-    // Add Stamen Watercolor tiles for artistic look (base layer)
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg', {
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
-        maxZoom: 16,
-        minZoom: 1
-    }).addTo(map);
-
-    // Add country borders overlay (Stamen Toner Lines)
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_lines/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
-        maxZoom: 16,
+    // Use CartoDB Positron (completely free, no API key needed)
+    // Apply artistic filter via CSS class
+    L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
+        subdomains: 'abcd',
+        maxZoom: 20,
         minZoom: 1,
-        opacity: 0.4
+        className: 'artistic-tiles'
     }).addTo(map);
 
-    // Add country labels overlay (Stamen Toner Labels)
-    L.tileLayer('https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png', {
-        attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
-        maxZoom: 16,
-        minZoom: 1,
-        opacity: 0.5
-    }).addTo(map);
-
-    console.log('Map initialized with watercolor tiles and country borders');
+    console.log('Map initialized with artistic tiles');
 }
 
 /**
