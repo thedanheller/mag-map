@@ -201,6 +201,8 @@ function initMap() {
     // Create map centered on world view
     map = L.map('map').setView([20, 0], 2);
 
+    if (USE_ARTISTIC_MAP) {
+
     // STADIA MAPS API KEY
     // Sign up for free at: https://client.stadiamaps.com/signup/
     // Free tier: 25,000 map views/month (no credit card required)
