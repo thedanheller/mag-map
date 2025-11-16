@@ -186,7 +186,7 @@ function initMap() {
     // Sign up for free at: https://client.stadiamaps.com/signup/
     // Free tier: 25,000 map views/month (no credit card required)
     // Replace 'YOUR_API_KEY_HERE' with your actual API key
-    const stadiaApiKey = 'YOUR_API_KEY_HERE';
+    const stadiaApiKey = '17d026a2-4644-42f2-922d-5fff5e6a1559';
 
     // Add Stamen Watercolor tiles for artistic look (base layer)
     L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=${stadiaApiKey}`, {
