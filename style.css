@@ -381,6 +381,10 @@ body {
     z-index: 2000;
 }
 
+.welcome-modal h2 {
+    padding: 1em;
+}
+
 .welcome-content {
     max-width: 700px;
 }
