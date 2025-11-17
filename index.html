@@ -51,17 +51,42 @@
     <div id="modal" class="modal" style="display: none;">
         <div class="modal-content">
             <span class="close-button">&times;</span>
-            <h2 id="modal-title"></h2>
-            <div class="modal-body">
+
+            <!-- Country Section -->
+            <div class="modal-section country-section">
+                <h2 class="section-title">
+                    <span id="modal-country-flag" class="country-flag"></span>
+                    <span id="modal-country-name"></span>
+                </h2>
+                <p id="modal-country-description" class="country-description"></p>
+            </div>
+
+            <!-- Song Section -->
+            <div class="modal-section song-section">
+                <h3 class="section-subtitle">Song / Canção / Canción</h3>
+                <h2 id="modal-song-name" class="song-name"></h2>
+                <p id="modal-song-author" class="song-author"></p>
                 <div id="modal-audio-container" class="audio-container">
                     <audio id="modal-audio" controls>
                         Your browser does not support the audio element.
                     </audio>
                 </div>
-                <div id="modal-image-container" class="image-container">
-                    <img id="modal-image" src="" alt="">
+                <p id="modal-song-description" class="song-description"></p>
+            </div>
+
+            <!-- Teacher Section -->
+            <div class="modal-section teacher-section">
+                <h3 class="section-subtitle">Teacher / Professor(a) / Profesor(a)</h3>
+                <div class="teacher-info">
+                    <div id="modal-teacher-photo-container" class="teacher-photo-container">
+                        <img id="modal-teacher-photo" src="" alt="">
+                    </div>
+                    <div class="teacher-details">
+                        <h4 id="modal-teacher-name" class="teacher-name"></h4>
+                        <p id="modal-teacher-bio" class="teacher-bio"></p>
+                        <a id="modal-teacher-link" class="teacher-link" href="" target="_blank" style="display: none;"></a>
+                    </div>
                 </div>
-                <div id="modal-description" class="description"></div>
             </div>
         </div>
     </div>

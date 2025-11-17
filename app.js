@@ -386,12 +386,20 @@ function addMarkersToMap(data) {
     const bounds = [];
 
     data.forEach((row, index) => {
-        // Get language-specific title and description
-        const title = row[`title_${currentLanguage}`] || row.title_en_us || row.title || 'Untitled';
-        const description = row[`description_${currentLanguage}`] || row.description_en_us || row.description || '';
-        const { id, lat, lng, image, audio } = row;
+        // Get language-specific fields
+        const countryDescription = row[`country_description_${currentLanguage}`] || row.country_description_en_us || '';
+        const songDescription = row[`song_description_${currentLanguage}`] || row.song_description_en_us || '';
+        const teacherBio = row[`teacher_bio_${currentLanguage}`] || row.teacher_bio_en_us || '';
 
-        console.log(`Marker ${index + 1} (${currentLanguage}): ${title}`);
+        // Get non-language-specific fields
+        const {
+            id, lat, lng,
+            country_name, country_flag,
+            song_name, song_author, audio,
+            teacher_name, teacher_photo, teacher_link
+        } = row;
+
+        console.log(`Marker ${index + 1} (${currentLanguage}): ${song_name} - ${country_name}`);
 
         // Validate required fields
         if (!lat || !lng) {
@@ -416,10 +424,17 @@ function addMarkersToMap(data) {
             .on('click', () => {
                 openModal({
                     id: id || index,
-                    title: title,
-                    description: description,
-                    image: image ? image.trim() : '',
-                    audio: audio ? audio.trim() : ''
+                    countryName: country_name,
+                    countryFlag: country_flag,
+                    countryDescription: countryDescription,
+                    songName: song_name,
+                    songAuthor: song_author,
+                    songDescription: songDescription,
+                    audio: audio ? audio.trim() : '',
+                    teacherName: teacher_name,
+                    teacherPhoto: teacher_photo,
+                    teacherBio: teacherBio,
+                    teacherLink: teacher_link
                 });
             });
 
@@ -439,36 +454,30 @@ function addMarkersToMap(data) {
  * Open modal with marker details
  */
 function openModal(markerData) {
-    const { title, description, image, audio } = markerData;
+    const {
+        countryName, countryFlag, countryDescription,
+        songName, songAuthor, songDescription, audio,
+        teacherName, teacherPhoto, teacherBio, teacherLink
+    } = markerData;
 
-    // Set title
-    document.getElementById('modal-title').textContent = title;
+    // Set country information
+    document.getElementById('modal-country-flag').textContent = countryFlag || '';
+    document.getElementById('modal-country-name').textContent = countryName || '';
+    document.getElementById('modal-country-description').textContent = countryDescription || '';
 
-    // Set description
-    const descriptionEl = document.getElementById('modal-description');
-    if (description) {
-        descriptionEl.textContent = description;
-        descriptionEl.classList.remove('hidden');
+    // Set song information
+    document.getElementById('modal-song-name').textContent = songName || '';
+    const songAuthorEl = document.getElementById('modal-song-author');
+    if (songAuthor && songAuthor.trim() && songAuthor.toLowerCase() !== 'traditional') {
+        songAuthorEl.textContent = `by ${songAuthor}`;
+        songAuthorEl.style.display = 'block';
+    } else if (songAuthor && songAuthor.toLowerCase() === 'traditional') {
+        songAuthorEl.textContent = 'Traditional';
+        songAuthorEl.style.display = 'block';
     } else {
-        descriptionEl.classList.add('hidden');
+        songAuthorEl.style.display = 'none';
     }
-
-    // Set image
-    const imageContainer = document.getElementById('modal-image-container');
-    const imageEl = document.getElementById('modal-image');
-    if (image) {
-        imageEl.src = image;
-        imageEl.alt = title;
-        imageContainer.classList.remove('hidden');
-
-        // Handle image load error
-        imageEl.onerror = () => {
-            console.warn(`Failed to load image: ${image}`);
-            imageContainer.classList.add('hidden');
-        };
-    } else {
-        imageContainer.classList.add('hidden');
-    }
+    document.getElementById('modal-song-description').textContent = songDescription || '';
 
     // Set audio
     const audioContainer = document.getElementById('modal-audio-container');
@@ -484,6 +493,37 @@ function openModal(markerData) {
         };
     } else {
         audioContainer.classList.add('hidden');
+    }
+
+    // Set teacher information
+    document.getElementById('modal-teacher-name').textContent = teacherName || '';
+    document.getElementById('modal-teacher-bio').textContent = teacherBio || '';
+
+    // Set teacher photo
+    const teacherPhotoContainer = document.getElementById('modal-teacher-photo-container');
+    const teacherPhotoEl = document.getElementById('modal-teacher-photo');
+    if (teacherPhoto) {
+        teacherPhotoEl.src = teacherPhoto;
+        teacherPhotoEl.alt = teacherName || 'Teacher';
+        teacherPhotoContainer.classList.remove('hidden');
+
+        // Handle photo load error
+        teacherPhotoEl.onerror = () => {
+            console.warn(`Failed to load teacher photo: ${teacherPhoto}`);
+            teacherPhotoContainer.classList.add('hidden');
+        };
+    } else {
+        teacherPhotoContainer.classList.add('hidden');
+    }
+
+    // Set teacher link
+    const teacherLinkEl = document.getElementById('modal-teacher-link');
+    if (teacherLink && teacherLink.trim()) {
+        teacherLinkEl.href = teacherLink;
+        teacherLinkEl.textContent = 'Learn more';
+        teacherLinkEl.style.display = 'inline-block';
+    } else {
+        teacherLinkEl.style.display = 'none';
     }
 
     // Show modal

@@ -141,7 +141,7 @@ body {
                 inset 0 1px 0 rgba(255, 255, 255, 0.5);
     border: 3px solid rgba(139, 69, 19, 0.15);
     width: 90%;
-    max-width: 650px;
+    max-width: 750px;
     max-height: 90vh;
     overflow-y: auto;
     position: relative;
@@ -258,6 +258,130 @@ body {
     filter: sepia(0.2) hue-rotate(-10deg);
 }
 
+/* Modal Sections */
+.modal-section {
+    padding: 1.5rem 2rem;
+    border-bottom: 2px solid rgba(139, 69, 19, 0.1);
+}
+
+.modal-section:last-child {
+    border-bottom: none;
+}
+
+.section-title {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: #5d2e0f;
+    font-size: 1.8rem;
+    margin: 0 0 1rem 0;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+}
+
+.section-subtitle {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: #8b6f47;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    margin: 0 0 0.75rem 0;
+    font-weight: 400;
+}
+
+/* Country Section */
+.country-flag {
+    font-size: 2.5rem;
+    line-height: 1;
+}
+
+.country-description {
+    color: #4a3428;
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 0;
+}
+
+/* Song Section */
+.song-name {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: #5d2e0f;
+    font-size: 1.6rem;
+    margin: 0 0 0.5rem 0;
+    font-weight: 600;
+}
+
+.song-author {
+    color: #8b6f47;
+    font-size: 1rem;
+    font-style: italic;
+    margin: 0 0 1rem 0;
+}
+
+.song-description {
+    color: #4a3428;
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 1rem 0 0 0;
+}
+
+/* Teacher Section */
+.teacher-info {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+}
+
+.teacher-photo-container {
+    flex-shrink: 0;
+}
+
+.teacher-photo-container img {
+    width: 120px;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 50%;
+    border: 4px solid rgba(139, 69, 19, 0.2);
+    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.2);
+}
+
+.teacher-photo-container.hidden {
+    display: none;
+}
+
+.teacher-details {
+    flex: 1;
+}
+
+.teacher-name {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: #5d2e0f;
+    font-size: 1.3rem;
+    margin: 0 0 0.75rem 0;
+    font-weight: 600;
+}
+
+.teacher-bio {
+    color: #4a3428;
+    line-height: 1.7;
+    font-size: 1rem;
+    margin: 0 0 0.75rem 0;
+}
+
+.teacher-link {
+    color: #8b4513;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    border-bottom: 2px solid rgba(139, 69, 19, 0.3);
+    transition: all 0.3s ease;
+}
+
+.teacher-link:hover {
+    color: #5d2e0f;
+    border-bottom-color: #5d2e0f;
+}
+
 /* Welcome Modal Specific Styles */
 .welcome-modal {
     z-index: 2000;
@@ -331,6 +455,29 @@ body {
     .language-dropdown {
         padding: 8px 12px;
         font-size: 12px;
+    }
+
+    .modal-section {
+        padding: 1.25rem 1.5rem;
+    }
+
+    .section-title {
+        font-size: 1.4rem;
+    }
+
+    .song-name {
+        font-size: 1.3rem;
+    }
+
+    .teacher-info {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .teacher-photo-container img {
+        width: 100px;
+        height: 100px;
     }
 }
 
