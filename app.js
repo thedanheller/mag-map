@@ -22,6 +22,50 @@ const localeMap = {
     'en_us': 'en'
 };
 
+// UI translations
+const translations = {
+    'pt_br': {
+        song: 'Canção',
+        teacher: 'Professor(a)'
+    },
+    'es_es': {
+        song: 'Canción',
+        teacher: 'Profesor(a)'
+    },
+    'en_us': {
+        song: 'Song',
+        teacher: 'Teacher'
+    },
+    'zh_cn': {
+        song: '歌曲',
+        teacher: '老师'
+    },
+    'hi_in': {
+        song: 'गीत',
+        teacher: 'शिक्षक'
+    },
+    'fr_fr': {
+        song: 'Chanson',
+        teacher: 'Professeur'
+    },
+    'ar_sa': {
+        song: 'أغنية',
+        teacher: 'معلم'
+    },
+    'bn_bd': {
+        song: 'গান',
+        teacher: 'শিক্ষক'
+    },
+    'ur_pk': {
+        song: 'گانا',
+        teacher: 'استاد'
+    },
+    'id_id': {
+        song: 'Lagu',
+        teacher: 'Guru'
+    }
+};
+
 // MAP CONFIGURATION
 // Set to true for beautiful watercolor map (requires free Stadia API key - 25k views/month)
 // Set to false for simple free map (unlimited, no API key needed)
@@ -459,6 +503,11 @@ function openModal(markerData) {
         songName, songAuthor, songDescription, audio,
         teacherName, teacherPhoto, teacherBio, teacherLink
     } = markerData;
+
+    // Set UI translations based on current language
+    const t = translations[currentLanguage] || translations['en_us'];
+    document.getElementById('modal-song-subtitle').textContent = t.song;
+    document.getElementById('modal-teacher-subtitle').textContent = t.teacher;
 
     // Set country information
     document.getElementById('modal-country-flag').textContent = countryFlag || '';
