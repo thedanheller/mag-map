@@ -440,9 +440,9 @@ function calculateDistance(lat1, lng1, lat2, lng2) {
  */
 function offsetOverlappingMarkers(markerDataArray) {
     // Minimum distance threshold (in degrees) - markers closer than this will be offset
-    // At zoom level 2 (world view), ~3 degrees is visually distinct
-    const MIN_DISTANCE = 3.0;
-    const OFFSET_RADIUS = 2.5; // Radius for circular offset pattern
+    // 0.5 degrees is approximately 55km, perfect for same-city overlaps
+    const MIN_DISTANCE = 0.5;
+    const OFFSET_RADIUS = 1.5; // Radius for circular offset pattern
 
     const processedMarkers = [];
     const usedPositions = new Map(); // Track positions to detect overlaps
