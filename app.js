@@ -22,54 +22,59 @@ const localeMap = {
     'en_us': 'en'
 };
 
-// UI translations
-const translations = {
-    'pt_br': {
-        song: 'Canção',
-        teacher: 'Professor(a)'
-    },
-    'es_es': {
-        song: 'Canción',
-        teacher: 'Profesor(a)'
-    },
-    'en_us': {
-        song: 'Song',
-        teacher: 'Teacher'
-    },
-    'zh_cn': {
-        song: '歌曲',
-        teacher: '老师'
-    },
-    'hi_in': {
-        song: 'गीत',
-        teacher: 'शिक्षक'
-    },
-    'fr_fr': {
-        song: 'Chanson',
-        teacher: 'Professeur'
-    },
-    'ar_sa': {
-        song: 'أغنية',
-        teacher: 'معلم'
-    },
-    'bn_bd': {
-        song: 'গান',
-        teacher: 'শিক্ষক'
-    },
-    'ur_pk': {
-        song: 'گانا',
-        teacher: 'استاد'
-    },
-    'id_id': {
-        song: 'Lagu',
-        teacher: 'Guru'
-    }
-};
+// UI translations (loaded from CSV)
+let translations = {};
 
 // MAP CONFIGURATION
 // Set to true for beautiful watercolor map (requires free Stadia API key - 25k views/month)
 // Set to false for simple free map (unlimited, no API key needed)
 const USE_ARTISTIC_MAP = true;
+
+/**
+ * Load UI translations from CSV
+ */
+async function loadUITranslations() {
+    try {
+        const response = await fetch('data/ui-translations.csv');
+
+        if (!response.ok) {
+            console.warn('UI translations CSV not found');
+            return;
+        }
+
+        const csvText = await response.text();
+
+        Papa.parse(csvText, {
+            header: true,
+            skipEmptyLines: true,
+            complete: function(results) {
+                // Convert CSV rows to translations object
+                // Format: { pt_br: { song: 'Canção', teacher: 'Professor(a)', ... }, ... }
+                const languages = ['pt_br', 'es_es', 'en_us', 'zh_cn', 'hi_in', 'fr_fr', 'ar_sa', 'bn_bd', 'ur_pk', 'id_id'];
+
+                languages.forEach(lang => {
+                    translations[lang] = {};
+                });
+
+                results.data.forEach(row => {
+                    const key = row.key;
+                    languages.forEach(lang => {
+                        if (row[lang]) {
+                            translations[lang][key] = row[lang];
+                        }
+                    });
+                });
+
+                console.log('UI translations loaded successfully');
+            },
+            error: function(error) {
+                console.error('Error parsing UI translations CSV:', error);
+            }
+        });
+    } catch (error) {
+        console.error('Error loading UI translations CSV:', error);
+    }
+}
 
 /**
  * Load languages from CSV and populate dropdowns
@@ -518,10 +523,10 @@ function openModal(markerData) {
     document.getElementById('modal-song-name').textContent = songName || '';
     const songAuthorEl = document.getElementById('modal-song-author');
     if (songAuthor && songAuthor.trim() && songAuthor.toLowerCase() !== 'traditional') {
-        songAuthorEl.textContent = `by ${songAuthor}`;
+        songAuthorEl.textContent = `${t.by || 'by'} ${songAuthor}`;
         songAuthorEl.style.display = 'block';
     } else if (songAuthor && songAuthor.toLowerCase() === 'traditional') {
-        songAuthorEl.textContent = 'Traditional';
+        songAuthorEl.textContent = t.traditional || 'Traditional';
         songAuthorEl.style.display = 'block';
     } else {
         songAuthorEl.style.display = 'none';
@@ -569,7 +574,7 @@ function openModal(markerData) {
     const teacherLinkEl = document.getElementById('modal-teacher-link');
     if (teacherLink && teacherLink.trim()) {
         teacherLinkEl.href = teacherLink;
-        teacherLinkEl.textContent = 'Learn more';
+        teacherLinkEl.textContent = t.learn_more || 'Learn more';
         teacherLinkEl.style.display = 'inline-block';
     } else {
         teacherLinkEl.style.display = 'none';
@@ -640,6 +645,7 @@ function init() {
     initMap();
     setupModalEvents();
     setupWelcomeModalEvents();
+    loadUITranslations();
     loadLanguages();
     loadCSV();
     loadWelcomeContent();
