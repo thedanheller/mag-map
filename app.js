@@ -429,12 +429,90 @@ async function loadCSV() {
 }
 
 /**
+ * Calculate distance between two coordinates in degrees
+ */
+function calculateDistance(lat1, lng1, lat2, lng2) {
+    return Math.sqrt(Math.pow(lat2 - lat1, 2) + Math.pow(lng2 - lng1, 2));
+}
+
+/**
+ * Offset overlapping markers so they're visible at default zoom
+ */
+function offsetOverlappingMarkers(markerDataArray) {
+    // Minimum distance threshold (in degrees) - markers closer than this will be offset
+    // At zoom level 2 (world view), ~3 degrees is visually distinct
+    const MIN_DISTANCE = 3.0;
+    const OFFSET_RADIUS = 2.5; // Radius for circular offset pattern
+
+    const processedMarkers = [];
+    const usedPositions = new Map(); // Track positions to detect overlaps
+
+    markerDataArray.forEach((markerData, index) => {
+        let { latitude, longitude } = markerData;
+        let isOverlapping = false;
+        let overlapGroup = null;
+
+        // Check if this position is close to any existing marker
+        for (let [key, group] of usedPositions.entries()) {
+            const [existingLat, existingLng] = key.split(',').map(Number);
+            const distance = calculateDistance(latitude, longitude, existingLat, existingLng);
+
+            if (distance < MIN_DISTANCE) {
+                isOverlapping = true;
+                overlapGroup = group;
+                break;
+            }
+        }
+
+        if (isOverlapping && overlapGroup) {
+            // Add to existing overlap group
+            const groupSize = overlapGroup.length;
+            const angle = (groupSize * 2 * Math.PI) / (groupSize + 1); // Evenly distribute in circle
+
+            // Offset in a circular pattern
+            latitude = overlapGroup[0].originalLat + (OFFSET_RADIUS * Math.sin(angle));
+            longitude = overlapGroup[0].originalLng + (OFFSET_RADIUS * Math.cos(angle));
+
+            // Also reposition existing markers in the group for better distribution
+            overlapGroup.forEach((existing, i) => {
+                const newAngle = (i * 2 * Math.PI) / (groupSize + 1);
+                existing.latitude = existing.originalLat + (OFFSET_RADIUS * Math.sin(newAngle));
+                existing.longitude = existing.originalLng + (OFFSET_RADIUS * Math.cos(newAngle));
+            });
+
+            // Store original position
+            markerData.originalLat = overlapGroup[0].originalLat;
+            markerData.originalLng = overlapGroup[0].originalLng;
+            markerData.latitude = latitude;
+            markerData.longitude = longitude;
+
+            overlapGroup.push(markerData);
+        } else {
+            // No overlap, use original position
+            markerData.originalLat = latitude;
+            markerData.originalLng = longitude;
+            markerData.latitude = latitude;
+            markerData.longitude = longitude;
+
+            // Create new overlap group
+            const posKey = `${latitude.toFixed(2)},${longitude.toFixed(2)}`;
+            usedPositions.set(posKey, [markerData]);
+        }
+
+        processedMarkers.push(markerData);
+    });
+
+    return processedMarkers;
+}
+
+/**
  * Add markers to the map from parsed CSV data
  */
 function addMarkersToMap(data) {
     const bounds = [];
 
-    data.forEach((row, index) => {
+    // Prepare marker data with coordinates
+    const markerDataArray = data.map((row, index) => {
         // Get language-specific fields
         const countryDescription = row[`country_description_${currentLanguage}`] || row.country_description_en_us || '';
         const songDescription = row[`song_description_${currentLanguage}`] || row.song_description_en_us || '';
@@ -448,12 +526,10 @@ function addMarkersToMap(data) {
             teacher_name, teacher_photo, teacher_link
         } = row;
 
-        console.log(`Marker ${index + 1} (${currentLanguage}): ${song_name} - ${country_name}`);
-
         // Validate required fields
         if (!lat || !lng) {
             console.warn(`Skipping row ${index + 1}: missing lat/lng`);
-            return;
+            return null;
         }
 
         const latitude = parseFloat(lat);
@@ -462,8 +538,36 @@ function addMarkersToMap(data) {
         // Validate coordinates
         if (isNaN(latitude) || isNaN(longitude)) {
             console.warn(`Skipping row ${index + 1}: invalid coordinates`);
-            return;
+            return null;
         }
+
+        return {
+            index,
+            id: id || index,
+            latitude,
+            longitude,
+            countryName: country_name,
+            countryFlag: country_flag,
+            countryDescription,
+            songName: song_name,
+            songAuthor: song_author,
+            songDescription,
+            audio: audio ? audio.trim() : '',
+            teacherName: teacher_name,
+            teacherPhoto: teacher_photo,
+            teacherBio,
+            teacherLink: teacher_link
+        };
+    }).filter(item => item !== null);
+
+    // Offset overlapping markers
+    const offsetMarkers = offsetOverlappingMarkers(markerDataArray);
+
+    // Create markers on the map
+    offsetMarkers.forEach(markerData => {
+        const { latitude, longitude } = markerData;
+
+        console.log(`Marker ${markerData.index + 1} (${currentLanguage}): ${markerData.songName} - ${markerData.countryName} [${latitude.toFixed(2)}, ${longitude.toFixed(2)}]`);
 
         // Create marker with custom artistic icon
         const marker = L.marker([latitude, longitude], {
@@ -472,18 +576,18 @@ function addMarkersToMap(data) {
             .addTo(map)
             .on('click', () => {
                 openModal({
-                    id: id || index,
-                    countryName: country_name,
-                    countryFlag: country_flag,
-                    countryDescription: countryDescription,
-                    songName: song_name,
-                    songAuthor: song_author,
-                    songDescription: songDescription,
-                    audio: audio ? audio.trim() : '',
-                    teacherName: teacher_name,
-                    teacherPhoto: teacher_photo,
-                    teacherBio: teacherBio,
-                    teacherLink: teacher_link
+                    id: markerData.id,
+                    countryName: markerData.countryName,
+                    countryFlag: markerData.countryFlag,
+                    countryDescription: markerData.countryDescription,
+                    songName: markerData.songName,
+                    songAuthor: markerData.songAuthor,
+                    songDescription: markerData.songDescription,
+                    audio: markerData.audio,
+                    teacherName: markerData.teacherName,
+                    teacherPhoto: markerData.teacherPhoto,
+                    teacherBio: markerData.teacherBio,
+                    teacherLink: markerData.teacherLink
                 });
             });
 
