@@ -30,7 +30,7 @@ let translations = {};
 // - stadia: Artistic watercolor style (requires free API key, 25k views/month)
 // - cartodb: Clean & simple (free, unlimited, no API key)
 // - google: High quality roads/satellite (requires API key, $200 free credit/month)
-const MAP_PROVIDER = 'stadia';
+const MAP_PROVIDER = 'cartodb';
 
 /**
  * Load UI translations from CSV

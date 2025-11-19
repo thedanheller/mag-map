@@ -12,9 +12,9 @@
 
 function initGoogleMap(map) {
     // IMPORTANT: Replace with your actual Google Maps API key
-    const googleApiKey = 'AIzaSyBPsPaGgng9P7kqOfKxijB4_8RiYYPVgGw';
+    const googleApiKey = 'my_api_key';
 
-    if (googleApiKey === 'AIzaSyBPsPaGgng9P7kqOfKxijB4_8RiYYPVgGw') {
+    if (googleApiKey === 'my_api_key') {
         console.error('Google Maps API key not configured! Please add your API key in map-providers/google.js');
         alert('Google Maps requires an API key. Please configure it in map-providers/google.js');
         return;
