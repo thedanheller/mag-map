@@ -1,0 +1,188 @@
+/* ========================================
+   VINTAGE THEME - Warm Brown Artistic Style
+   ======================================== */
+
+/* Base Colors */
+:root {
+    --primary-color: #8b4513; /* Saddle brown */
+    --primary-light: #d4a574;
+    --primary-dark: #5d2e0f;
+    --background-light: #fdfcfb;
+    --background-cream: #e8dfd4;
+    --background-tan: #e2d1c3;
+    --text-primary: #3e2723;
+    --text-secondary: #8b6f47;
+    --border-color: rgba(139, 69, 19, 0.2);
+    --shadow-color: rgba(62, 39, 35, 0.3);
+}
+
+/* Typography */
+body {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: var(--text-primary);
+}
+
+/* Logo Circle Theme */
+.logo-circle {
+    background: #FFFFFF;
+    box-shadow: 0 4px 15px var(--shadow-color),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+    border: 3px solid var(--border-color);
+}
+
+.logo-circle:hover {
+    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border-color: rgba(139, 69, 19, 0.4);
+}
+
+/* Language Dropdown Theme */
+.language-dropdown {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-cream) 100%);
+    border: 3px solid var(--border-color);
+    color: var(--primary-dark);
+    box-shadow: 0 4px 15px var(--shadow-color),
+                inset 0 1px 0 rgba(255, 255, 255, 0.6);
+}
+
+.language-dropdown:hover {
+    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.4),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+    border-color: rgba(139, 69, 19, 0.4);
+}
+
+/* Loading Indicator Theme */
+.loading {
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-tan) 100%);
+    box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
+    border: 2px solid var(--border-color);
+}
+
+.loading-spinner {
+    border: 4px solid rgba(139, 69, 19, 0.1);
+    border-top: 4px solid var(--primary-color);
+}
+
+/* Modal Theme */
+.modal {
+    background-color: rgba(62, 39, 35, 0.9);
+}
+
+.modal-content {
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-cream) 100%);
+    border: 4px solid rgba(139, 69, 19, 0.15);
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.modal-content h2 {
+    color: var(--primary-dark);
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
+}
+
+.modal-content h3 {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+}
+
+.modal-content h4 {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: var(--primary-dark);
+}
+
+.modal-content p {
+    color: var(--text-primary);
+}
+
+.close-button {
+    color: var(--primary-dark);
+    background: rgba(139, 69, 19, 0.1);
+    border: 2px solid rgba(139, 69, 19, 0.2);
+}
+
+.close-button:hover,
+.close-button:focus {
+    background: rgba(139, 69, 19, 0.2);
+    color: var(--primary-color);
+    border-color: rgba(139, 69, 19, 0.4);
+}
+
+/* Modal Sections Theme */
+.modal-section {
+    border-bottom: 2px solid rgba(139, 69, 19, 0.1);
+}
+
+.section-subtitle {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: var(--text-secondary);
+}
+
+.country-flag {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+.song-author {
+    color: var(--text-secondary);
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+}
+
+.audio-container audio {
+    filter: sepia(30%) saturate(80%);
+}
+
+.teacher-photo-container img {
+    border: 4px solid rgba(139, 69, 19, 0.2);
+    box-shadow: 0 4px 12px rgba(139, 69, 19, 0.15);
+}
+
+.teacher-link {
+    color: var(--primary-color);
+    border-bottom: 2px solid rgba(139, 69, 19, 0.3);
+}
+
+.teacher-link:hover {
+    color: var(--primary-dark);
+    border-bottom-color: var(--primary-dark);
+}
+
+/* Welcome Modal Theme */
+.welcome-modal {
+    background-color: rgba(62, 39, 35, 0.95);
+}
+
+.welcome-content {
+    background: linear-gradient(135deg, var(--background-light) 0%, var(--background-cream) 100%);
+    border: 4px solid rgba(139, 69, 19, 0.15);
+    box-shadow: 0 20px 60px rgba(139, 69, 19, 0.3),
+                inset 0 1px 0 rgba(255, 255, 255, 0.8);
+}
+
+.welcome-content h2 {
+    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
+    color: var(--primary-dark);
+    text-shadow: 1px 1px 2px rgba(139, 69, 19, 0.1);
+    border-bottom: 3px solid rgba(139, 69, 19, 0.2);
+}
+
+.welcome-content p {
+    color: var(--text-primary);
+}
+
+.welcome-close {
+    color: var(--primary-dark);
+    background: rgba(139, 69, 19, 0.1);
+    border: 2px solid rgba(139, 69, 19, 0.2);
+}
+
+.welcome-close:hover,
+.welcome-close:focus {
+    background: rgba(139, 69, 19, 0.2);
+    color: var(--primary-color);
+    border-color: rgba(139, 69, 19, 0.4);
+}
+
+.welcome-image {
+    border: 4px solid rgba(139, 69, 19, 0.15);
+    box-shadow: 0 8px 24px rgba(139, 69, 19, 0.2);
+}

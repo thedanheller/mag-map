@@ -12,6 +12,10 @@
 
     <!-- Custom CSS -->
     <link rel="stylesheet" href="style.css">
+
+    <!-- Theme CSS (change theme by updating href) -->
+    <!-- Options: themes/vintage.css or themes/minimalist.css -->
+    <link rel="stylesheet" href="themes/vintage.css" id="theme-stylesheet">
 </head>
 <body>
     <!-- Map Container -->
@@ -98,6 +102,11 @@
 
     <!-- PapaParse for CSV parsing -->
     <script src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+
+    <!-- Map Provider Scripts (load before app.js) -->
+    <script src="map-providers/stadia.js"></script>
+    <script src="map-providers/cartodb.js"></script>
+    <script src="map-providers/google.js"></script>
 
     <!-- Custom JS -->
     <script src="app.js"></script>

@@ -23,9 +23,11 @@ const localeMap = {
 };
 
 // MAP CONFIGURATION
-// Set to true for beautiful watercolor map (requires free Stadia API key - 25k views/month)
-// Set to false for simple free map (unlimited, no API key needed)
-const USE_ARTISTIC_MAP = true;
+// Choose map provider: 'stadia', 'cartodb', or 'google'
+// - stadia: Artistic watercolor style (requires free API key, 25k views/month)
+// - cartodb: Clean & simple (free, unlimited, no API key)
+// - google: High quality roads/satellite (requires API key, $200 free credit/month)
+const MAP_PROVIDER = 'stadia';
 
 /**
  * Load languages from CSV and populate dropdowns
@@ -293,54 +295,37 @@ function initMap() {
     // Add zoom control to bottom-right corner
     L.control.zoom({ position: 'bottomright' }).addTo(map);
 
-    if (USE_ARTISTIC_MAP) {
+    // Load map provider based on configuration
+    switch (MAP_PROVIDER.toLowerCase()) {
+        case 'stadia':
+            if (typeof initStadiaMap === 'function') {
+                initStadiaMap(map);
+            } else {
+                console.error('Stadia map provider not loaded. Include map-providers/stadia.js in HTML');
+            }
+            break;
 
-    // STADIA MAPS API KEY
-    // Sign up for free at: https://client.stadiamaps.com/signup/
-    // Free tier: 25,000 map views/month (no credit card required)
-    // Replace 'YOUR_API_KEY_HERE' with your actual API key
-    const stadiaApiKey = '17d026a2-4644-42f2-922d-5fff5e6a1559';
+        case 'cartodb':
+            if (typeof initCartoDBMap === 'function') {
+                initCartoDBMap(map);
+            } else {
+                console.error('CartoDB map provider not loaded. Include map-providers/cartodb.js in HTML');
+            }
+            break;
 
-        // NOTE: Stamen Watercolor tiles are pre-rendered and don't support language switching
-        // The labels are baked into the images (typically in English)
-        // For multilingual support, you would need to use Mapbox or similar services
+        case 'google':
+            if (typeof initGoogleMap === 'function') {
+                initGoogleMap(map);
+            } else {
+                console.error('Google Maps provider not loaded. Include map-providers/google.js in HTML');
+            }
+            break;
 
-        // Add Stamen Watercolor tiles for artistic look (base layer)
-        L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_watercolor/{z}/{x}/{y}.jpg?api_key=${stadiaApiKey}`, {
-            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>, &copy; <a href="https://openmaptiles.org/">OpenMapTiles</a>',
-            maxZoom: 16,
-            minZoom: 1
-        }).addTo(map);
-
-        // Add country borders overlay (Stamen Toner Lines)
-        L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_lines/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
-            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
-            maxZoom: 16,
-            minZoom: 1,
-            opacity: 0.4
-        }).addTo(map);
-
-        // Add country labels overlay (Stamen Toner Labels - English only, pre-rendered)
-        L.tileLayer(`https://tiles.stadiamaps.com/tiles/stamen_toner_labels/{z}/{x}/{y}.png?api_key=${stadiaApiKey}`, {
-            attribution: '&copy; <a href="https://stadiamaps.com/">Stadia Maps</a>, &copy; <a href="https://stamen.com">Stamen Design</a>',
-            maxZoom: 16,
-            minZoom: 1,
-            opacity: 0.5
-        }).addTo(map);
-
-        console.log('Map initialized with artistic watercolor tiles (labels in English only)');
-    } else {
-        // OPTION 2: FREE MAP (CartoDB - Unlimited, No API Key)
-        // This is a simple, clean map with country borders included
-        // Completely free with no usage limits
-        L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png', {
-            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
-            subdomains: 'abcd',
-            maxZoom: 20,
-            minZoom: 1
-        }).addTo(map);
-
-        console.log('Map initialized with free CartoDB tiles');
+        default:
+            console.error(`Unknown map provider: ${MAP_PROVIDER}. Using CartoDB as fallback.`);
+            if (typeof initCartoDBMap === 'function') {
+                initCartoDBMap(map);
+            }
     }
 }
 

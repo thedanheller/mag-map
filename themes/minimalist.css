@@ -1,0 +1,186 @@
+/* ========================================
+   MINIMALIST THEME - Clean Black & White
+   ======================================== */
+
+/* Base Colors */
+:root {
+    --primary-color: #000000;
+    --primary-light: #333333;
+    --background-light: #FFFFFF;
+    --background-gray: #F5F5F5;
+    --text-primary: #000000;
+    --text-secondary: #666666;
+    --border-color: #E0E0E0;
+    --border-dark: #000000;
+    --shadow-color: rgba(0, 0, 0, 0.1);
+}
+
+/* Typography */
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-primary);
+}
+
+/* Logo Circle Theme */
+.logo-circle {
+    background: var(--background-light);
+    box-shadow: 0 2px 8px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.logo-circle:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--border-dark);
+}
+
+/* Language Dropdown Theme */
+.language-dropdown {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    color: var(--text-primary);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.language-dropdown:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    border-color: var(--border-dark);
+}
+
+/* Loading Indicator Theme */
+.loading {
+    background: var(--background-light);
+    box-shadow: 0 4px 16px var(--shadow-color);
+    border: 1px solid var(--border-color);
+}
+
+.loading-spinner {
+    border: 3px solid var(--border-color);
+    border-top: 3px solid var(--primary-color);
+}
+
+/* Modal Theme */
+.modal {
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+.modal-content h2 {
+    color: var(--text-primary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 600;
+    text-shadow: none;
+}
+
+.modal-content h3 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    font-weight: 500;
+}
+
+.modal-content h4 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-primary);
+    font-weight: 500;
+}
+
+.modal-content p {
+    color: var(--text-primary);
+}
+
+.close-button {
+    color: var(--text-primary);
+    background: transparent;
+    border: 1px solid var(--border-color);
+}
+
+.close-button:hover,
+.close-button:focus {
+    background: var(--background-gray);
+    color: var(--primary-color);
+    border-color: var(--border-dark);
+}
+
+/* Modal Sections Theme */
+.modal-section {
+    border-bottom: 1px solid var(--border-color);
+}
+
+.section-subtitle {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-secondary);
+    font-weight: 500;
+}
+
+.country-flag {
+    text-shadow: none;
+}
+
+.song-author {
+    color: var(--text-secondary);
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+}
+
+.audio-container audio {
+    filter: none;
+}
+
+.teacher-photo-container img {
+    border: 1px solid var(--border-color);
+    box-shadow: 0 2px 8px var(--shadow-color);
+}
+
+.teacher-link {
+    color: var(--primary-color);
+    border-bottom: 1px solid var(--border-dark);
+}
+
+.teacher-link:hover {
+    color: var(--primary-light);
+    border-bottom-color: var(--primary-light);
+}
+
+/* Welcome Modal Theme */
+.welcome-modal {
+    background-color: rgba(0, 0, 0, 0.6);
+}
+
+.welcome-content {
+    background: var(--background-light);
+    border: 1px solid var(--border-color);
+    box-shadow: 0 8px 32px var(--shadow-color);
+}
+
+.welcome-content h2 {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Helvetica Neue', Arial, sans-serif;
+    color: var(--text-primary);
+    font-weight: 600;
+    text-shadow: none;
+    border-bottom: 1px solid var(--border-color);
+}
+
+.welcome-content p {
+    color: var(--text-primary);
+}
+
+.welcome-close {
+    color: var(--text-primary);
+    background: transparent;
+    border: 1px solid var(--border-color);
+}
+
+.welcome-close:hover,
+.welcome-close:focus {
+    background: var(--background-gray);
+    color: var(--primary-color);
+    border-color: var(--border-dark);
+}
+
+.welcome-image {
+    border: 1px solid var(--border-color);
+    box-shadow: 0 4px 16px var(--shadow-color);
+}

@@ -1,3 +1,8 @@
+/* ========================================
+   CORE STRUCTURAL STYLES
+   Theme-specific styles are in themes/
+   ======================================== */
+
 /* Reset and Base Styles */
 * {
     margin: 0;
@@ -6,7 +11,6 @@
 }
 
 body {
-    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
     overflow: hidden;
     height: 100vh;
     width: 100vw;
@@ -19,64 +23,45 @@ body {
     z-index: 1;
 }
 
-/* Logo Circle (Top Left) */
+/* Logo Circle (Top Left) - Structure */
 .logo-circle {
     position: fixed;
     top: 20px;
     left: 20px;
-    width: 60px;
-    height: 60px;
-    background: linear-gradient(135deg, #fdfcfb 0%, #e8dfd4 100%);
+    width: 100px;
+    height: 100px;
     border-radius: 50%;
-    box-shadow: 0 4px 15px rgba(62, 39, 35, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    border: 3px solid rgba(139, 69, 19, 0.2);
     z-index: 1001;
     cursor: pointer;
     display: flex;
     align-items: center;
+    padding: .3em;
     justify-content: center;
     transition: all 0.3s ease;
-}
-
-/* Language Dropdown */
-.language-dropdown {
-    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
-    background: linear-gradient(135deg, #fdfcfb 0%, #e8dfd4 100%);
-    border: 3px solid rgba(139, 69, 19, 0.2);
-    border-radius: 12px;
-    padding: 10px 15px;
-    font-size: 14px;
-    color: #5d2e0f;
-    cursor: pointer;
-    box-shadow: 0 4px 15px rgba(62, 39, 35, 0.3),
-                inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    outline: none;
-    transition: all 0.3s ease;
-}
-
-.language-dropdown:hover {
-    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border-color: rgba(139, 69, 19, 0.4);
+    overflow: hidden;
 }
 
 .logo-circle:hover {
     transform: scale(1.1);
-    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border-color: rgba(139, 69, 19, 0.4);
 }
 
-.logo-placeholder {
-    width: 35px;
-    height: 35px;
-    border-radius: 50%;
-    background: radial-gradient(circle, #d4a574 0%, #8b4513 100%);
-    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+.logo-image {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }
 
-/* Loading Indicator */
+/* Language Dropdown - Structure */
+.language-dropdown {
+    border-radius: 12px;
+    padding: 10px 15px;
+    font-size: 14px;
+    cursor: pointer;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+/* Loading Indicator - Structure */
 .loading {
     position: fixed;
     top: 50%;
@@ -84,16 +69,11 @@ body {
     transform: translate(-50%, -50%);
     z-index: 9999;
     text-align: center;
-    background: linear-gradient(135deg, #fdfcfb 0%, #e2d1c3 100%);
     padding: 2.5rem;
     border-radius: 20px;
-    box-shadow: 0 10px 40px rgba(139, 69, 19, 0.15);
-    border: 2px solid rgba(139, 69, 19, 0.1);
 }
 
 .loading-spinner {
-    border: 4px solid rgba(139, 69, 19, 0.1);
-    border-top: 4px solid #8b4513;
     border-radius: 50%;
     width: 50px;
     height: 50px;
@@ -106,7 +86,7 @@ body {
     100% { transform: rotate(360deg); }
 }
 
-/* Modal Styles */
+/* Modal Styles - Structure */
 .modal {
     display: none;
     position: fixed;
@@ -116,7 +96,6 @@ body {
     width: 100%;
     height: 100%;
     overflow: auto;
-    background-color: rgba(62, 39, 35, 0.75);
     backdrop-filter: blur(3px);
     animation: fadeIn 0.4s;
 }
@@ -133,13 +112,9 @@ body {
 }
 
 .modal-content {
-    background: linear-gradient(135deg, #fdfcfb 0%, #f7f3ed 50%, #e8dfd4 100%);
     margin: auto;
     padding: 0;
     border-radius: 20px;
-    box-shadow: 0 15px 50px rgba(62, 39, 35, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.5);
-    border: 3px solid rgba(139, 69, 19, 0.15);
     width: 90%;
     max-width: 750px;
     max-height: 90vh;
@@ -163,12 +138,10 @@ body {
     position: absolute;
     top: 15px;
     right: 20px;
-    color: #8b4513;
     font-size: 32px;
     font-weight: bold;
     cursor: pointer;
     z-index: 10;
-    background: rgba(255, 255, 255, 0.9);
     border-radius: 50%;
     width: 40px;
     height: 40px;
@@ -176,10 +149,9 @@ body {
     align-items: center;
     justify-content: center;
     line-height: 1;
-    border: 2px solid rgba(139, 69, 19, 0.3);
-    box-shadow: 0 2px 10px rgba(139, 69, 19, 0.2);
     user-select: none;
     -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s ease;
 }
 
 .modal-content h2 {
@@ -191,12 +163,11 @@ body {
     padding: 1.5rem 2rem 2rem;
 }
 
-/* Image Container */
+/* Image Container - Structure */
 .image-container {
     margin-bottom: 1.5rem;
     text-align: center;
     padding: 0.75rem;
-    background: rgba(255, 255, 255, 0.4);
     border-radius: 15px;
 }
 
@@ -204,26 +175,19 @@ body {
     max-width: 100%;
     height: auto;
     border-radius: 10px;
-    box-shadow: 0 8px 25px rgba(62, 39, 35, 0.2),
-                0 3px 8px rgba(139, 69, 19, 0.15);
-    border: 3px solid rgba(255, 255, 255, 0.8);
-    filter: sepia(0.05) contrast(1.05);
 }
 
 .image-container.hidden {
     display: none;
 }
 
-/* Description */
+/* Description - Structure */
 .description {
     margin-bottom: 1.5rem;
-    color: #4a3428;
     line-height: 1.8;
     font-size: 1.05rem;
     font-style: italic;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.3);
-    border-left: 4px solid rgba(139, 69, 19, 0.3);
     border-radius: 0 10px 10px 0;
 }
 
@@ -231,14 +195,12 @@ body {
     display: none;
 }
 
-/* Audio Container */
+/* Audio Container - Structure */
 .audio-container {
     width: 100%;
     margin-bottom: 1.5rem;
     padding: 1rem;
-    background: rgba(255, 255, 255, 0.5);
     border-radius: 15px;
-    border: 1px solid rgba(139, 69, 19, 0.15);
 }
 
 .audio-container.hidden {
@@ -249,13 +211,11 @@ body {
     width: 100%;
     border-radius: 10px;
     outline: none;
-    filter: sepia(0.2) hue-rotate(-10deg);
 }
 
-/* Modal Sections */
+/* Modal Sections - Structure */
 .modal-section {
     padding: 1.5rem 2rem;
-    border-bottom: 2px solid rgba(139, 69, 19, 0.1);
 }
 
 .modal-section:last-child {
@@ -263,8 +223,6 @@ body {
 }
 
 .section-title {
-    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
-    color: #5d2e0f;
     font-size: 1.8rem;
     margin: 0 0 1rem 0;
     font-weight: 600;
@@ -274,8 +232,6 @@ body {
 }
 
 .section-subtitle {
-    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
-    color: #8b6f47;
     font-size: 0.9rem;
     text-transform: uppercase;
     letter-spacing: 1.5px;
@@ -283,43 +239,38 @@ body {
     font-weight: 400;
 }
 
-/* Country Section */
+/* Country Section - Structure */
 .country-flag {
     font-size: 2.5rem;
     line-height: 1;
 }
 
 .country-description {
-    color: #4a3428;
     line-height: 1.7;
     font-size: 1rem;
     margin: 0;
 }
 
-/* Song Section */
+/* Song Section - Structure */
 .song-name {
-    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
-    color: #5d2e0f;
     font-size: 1.6rem;
     margin: 0 0 0.5rem 0;
     font-weight: 600;
 }
 
 .song-author {
-    color: #8b6f47;
     font-size: 1rem;
     font-style: italic;
     margin: 0 0 1rem 0;
 }
 
 .song-description {
-    color: #4a3428;
     line-height: 1.7;
     font-size: 1rem;
     margin: 1rem 0 0 0;
 }
 
-/* Teacher Section */
+/* Teacher Section - Structure */
 .teacher-info {
     display: flex;
     gap: 1.5rem;
@@ -335,8 +286,6 @@ body {
     height: 120px;
     object-fit: cover;
     border-radius: 50%;
-    border: 4px solid rgba(139, 69, 19, 0.2);
-    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.2);
 }
 
 .teacher-photo-container.hidden {
@@ -348,35 +297,26 @@ body {
 }
 
 .teacher-name {
-    font-family: 'Georgia', 'Garamond', 'Times New Roman', serif;
-    color: #5d2e0f;
     font-size: 1.3rem;
     margin: 0 0 0.75rem 0;
     font-weight: 600;
 }
 
 .teacher-bio {
-    color: #4a3428;
     line-height: 1.7;
     font-size: 1rem;
     margin: 0 0 0.75rem 0;
 }
 
 .teacher-link {
-    color: #8b4513;
     text-decoration: none;
     font-weight: 600;
     font-size: 0.95rem;
-    border-bottom: 2px solid rgba(139, 69, 19, 0.3);
     transition: all 0.3s ease;
+    display: inline-block;
 }
 
-.teacher-link:hover {
-    color: #5d2e0f;
-    border-bottom-color: #5d2e0f;
-}
-
-/* Welcome Modal Specific Styles */
+/* Welcome Modal Specific Styles - Structure */
 .welcome-modal {
     z-index: 2000;
 }
@@ -396,11 +336,9 @@ body {
 }
 
 .welcome-text {
-    color: #4a3428;
     line-height: 1.9;
     font-size: 1.1rem;
     padding: 1.25rem;
-    background: rgba(255, 255, 255, 0.4);
     border-radius: 12px;
     text-align: center;
     margin-top: 1rem;
@@ -408,6 +346,32 @@ body {
 
 .welcome-modal .image-container {
     margin-bottom: 0;
+}
+
+.welcome-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 32px;
+    font-weight: bold;
+    cursor: pointer;
+    z-index: 10;
+    border-radius: 50%;
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.welcome-image {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
 }
 
 /* Responsive Design */
@@ -427,7 +391,8 @@ body {
         padding: 1rem 1.5rem 1.5rem;
     }
 
-    .close-button {
+    .close-button,
+    .welcome-close {
         top: 10px;
         right: 15px;
         width: 30px;
@@ -476,28 +441,18 @@ body {
     }
 }
 
-/* Custom Marker Popup Styles */
+/* Custom Marker Popup Styles - Structure */
 .leaflet-popup-content-wrapper {
-    background: linear-gradient(135deg, #fdfcfb 0%, #f0e8dc 100%);
     border-radius: 12px;
-    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.25);
-    border: 2px solid rgba(139, 69, 19, 0.2);
 }
 
 .leaflet-popup-content {
     margin: 14px 18px;
     font-size: 15px;
     line-height: 1.5;
-    color: #5d2e0f;
-    font-family: 'Georgia', 'Garamond', serif;
 }
 
-.leaflet-popup-tip {
-    background: #f0e8dc;
-    box-shadow: 0 2px 5px rgba(62, 39, 35, 0.15);
-}
-
-/* Custom Pin Styling */
+/* Custom Pin Styling - Structure */
 .custom-pin {
     background: transparent;
     border: none;
@@ -507,13 +462,4 @@ body {
 
 .custom-pin:hover {
     transform: translateY(-3px);
-}
-
-/* Marker Cluster Styles (if needed in future) */
-.marker-cluster {
-    background-color: rgba(139, 69, 19, 0.4);
-}
-
-.marker-cluster div {
-    background-color: rgba(139, 69, 19, 0.6);
 }
