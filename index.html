@@ -27,11 +27,11 @@
             <img src="media/images/logo_magnifica.png" alt="Magnífica Orchestra" class="logo-image">
         </div>
         <div class="nav-links">
-            <a href="#" class="nav-link">Nós</a>
-            <a href="#" class="nav-link">Músicas</a>
-            <a href="#" class="nav-link secondary">Sobre</a>
+            <a href="#" class="nav-link" id="nav-nos">Nós</a>
+            <a href="#" class="nav-link" id="nav-musicas">Músicas</a>
+            <a href="#" class="nav-link secondary" id="nav-sobre">Sobre</a>
             <div class="language-selector">
-                <button class="nav-link language-toggle">A/文</button>
+                <button class="nav-link secondary language-toggle">A/文</button>
                 <select id="nav-language-select" class="language-dropdown nav-language-dropdown">
                     <option value="">Carregando...</option>
                 </select>
@@ -51,11 +51,6 @@
             <span class="close-button welcome-close">&times;</span>
             <h2 id="welcome-title"></h2>
             <div class="modal-body">
-                <div class="welcome-language-selector">
-                    <select id="welcome-language-select" class="language-dropdown">
-                        <option value="">Carregando...</option>
-                    </select>
-                </div>
                 <div id="welcome-image-container" class="image-container">
                     <img id="welcome-image" src="" alt="">
                 </div>

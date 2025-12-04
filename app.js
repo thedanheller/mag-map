@@ -10,9 +10,11 @@ const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
 const logoContainer = document.querySelector('.logo-container');
-const welcomeLanguageSelect = document.getElementById('welcome-language-select');
 const navLanguageSelect = document.getElementById('nav-language-select');
 const languageToggle = document.querySelector('.language-toggle');
+const navNos = document.getElementById('nav-nos');
+const navMusicas = document.getElementById('nav-musicas');
+const navSobre = document.getElementById('nav-sobre');
 
 // Current selected language (default to Portuguese)
 let currentLanguage = 'pt_br';
@@ -70,6 +72,9 @@ async function loadUITranslations() {
                 });
 
                 console.log('UI translations loaded successfully');
+
+                // Update navigation links with initial language
+                updateNavigationLinks();
             },
             error: function(error) {
                 console.error('Error parsing UI translations CSV:', error);
@@ -98,33 +103,21 @@ async function loadLanguages() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                // Clear loading options from dropdowns
-                welcomeLanguageSelect.innerHTML = '';
+                // Clear loading options from dropdown
                 navLanguageSelect.innerHTML = '';
 
-                // Populate both dropdowns with languages
+                // Populate navigation dropdown with languages
                 results.data.forEach(lang => {
-                    // Welcome modal dropdown
-                    const option1 = document.createElement('option');
-                    option1.value = lang.id;
-                    option1.textContent = lang.name;
+                    const option = document.createElement('option');
+                    option.value = lang.id;
+                    option.textContent = lang.name;
                     if (lang.id === currentLanguage) {
-                        option1.selected = true;
+                        option.selected = true;
                     }
-                    welcomeLanguageSelect.appendChild(option1);
-
-                    // Navigation dropdown
-                    const option2 = document.createElement('option');
-                    option2.value = lang.id;
-                    option2.textContent = lang.name;
-                    if (lang.id === currentLanguage) {
-                        option2.selected = true;
-                    }
-                    navLanguageSelect.appendChild(option2);
+                    navLanguageSelect.appendChild(option);
                 });
 
-                // Add change event listeners
-                welcomeLanguageSelect.addEventListener('change', handleLanguageChange);
+                // Add change event listener
                 navLanguageSelect.addEventListener('change', handleLanguageChange);
             },
             error: function(error) {
@@ -141,18 +134,29 @@ async function loadLanguages() {
  */
 function handleLanguageChange(e) {
     currentLanguage = e.target.value;
-
-    // Sync both dropdowns
-    welcomeLanguageSelect.value = currentLanguage;
     navLanguageSelect.value = currentLanguage;
-
     reloadContent();
+}
+
+/**
+ * Update navigation links with current language
+ */
+function updateNavigationLinks() {
+    const t = translations[currentLanguage] || translations['en_us'];
+    if (t) {
+        if (t.nav_nos) navNos.textContent = t.nav_nos;
+        if (t.nav_musicas) navMusicas.textContent = t.nav_musicas;
+        if (t.nav_sobre) navSobre.textContent = t.nav_sobre;
+    }
 }
 
 /**
  * Reload all content with current language
  */
 function reloadContent() {
+    // Update navigation links
+    updateNavigationLinks();
+
     // Reload welcome content and markers
     loadWelcomeContent();
     clearMarkers();
@@ -241,8 +245,8 @@ function displayWelcomeModal(data) {
         imageContainer.classList.add('hidden');
     }
 
-    // Show modal
-    openWelcomeModal();
+    // Don't auto-open modal on page load
+    // Modal will only open when user clicks "Sobre" link
 }
 
 /**
@@ -284,15 +288,15 @@ function setupWelcomeModalEvents() {
         }
     });
 
-    // Logo circle click - reopen welcome modal
-    const handleLogoClick = (e) => {
+    // Sobre link click - open welcome modal
+    const handleSobreClick = (e) => {
         e.preventDefault();
         e.stopPropagation();
         openWelcomeModal();
     };
 
-    logoContainer.addEventListener('click', handleLogoClick);
-    logoContainer.addEventListener('touchend', handleLogoClick);
+    navSobre.addEventListener('click', handleSobreClick);
+    navSobre.addEventListener('touchend', handleSobreClick);
 
     // Language toggle click - show/hide dropdown
     const handleLanguageToggle = (e) => {

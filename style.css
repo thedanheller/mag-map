@@ -45,12 +45,6 @@ body {
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.logo-container:hover {
-    transform: scale(1.05);
 }
 
 .logo-image {
@@ -394,16 +388,6 @@ body {
 
 .welcome-content {
     max-width: 700px;
-}
-
-.welcome-language-selector {
-    display: flex;
-    justify-content: center;
-    margin-bottom: 1.5rem;
-}
-
-.welcome-language-selector .language-dropdown {
-    min-width: 200px;
 }
 
 .welcome-text {
