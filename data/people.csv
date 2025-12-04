@@ -1,4 +1,4 @@
-id,lat,lng,neighborhood,person_name,person_photo
-1,-2.356.486,-4.668.098,Pinheiros,Lili Orágio,lili_oragio.jpg
-2,-235.714,-466.309,Aclimação,Gabriel Levy,gabriel_levy.jpg
-3,-23.944.841,-46.330.376,Santos - SP,Dan Prates,dan_prates.jpg
+id,lat,lng,state,city,neighborhood,person_name,person_photo
+1,-23.56394779163204,-46.68584346771241,SP,São Paulo,Pinheiros,Lili Orágio,lili_oragio.jpg
+2,-23.5671021,-46.6268011,SP,São Paulo,Aclimação,Gabriel Levy,gabriel_levy.jpg
+3,-23.9706651,-46.3149675,SP,Santos,Embaré,Dan Prates,dan_prates.jpg

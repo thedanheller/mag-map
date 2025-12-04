@@ -37,6 +37,11 @@ body {
     color: var(--primary-color);
 }
 
+.nav-link.active {
+    background: var(--background-gray);
+    color: var(--primary-color);
+}
+
 .nav-link.secondary {
     color: var(--text-secondary);
 }

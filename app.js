@@ -12,12 +12,15 @@ const welcomeModal = document.getElementById('welcome-modal');
 const logoContainer = document.querySelector('.logo-container');
 const navLanguageSelect = document.getElementById('nav-language-select');
 const languageToggle = document.querySelector('.language-toggle');
-const navNos = document.getElementById('nav-nos');
-const navMusicas = document.getElementById('nav-musicas');
+const navMusics = document.getElementById('nav-musics');
+const navPeople = document.getElementById('nav-people');
 const navSobre = document.getElementById('nav-sobre');
 
 // Current selected language (default to Portuguese)
 let currentLanguage = 'pt_br';
+
+// Current view state (musics or people)
+let currentView = 'musics';
 
 // Map locale configuration
 const localeMap = {
@@ -144,8 +147,8 @@ function handleLanguageChange(e) {
 function updateNavigationLinks() {
     const t = translations[currentLanguage] || translations['en_us'];
     if (t) {
-        if (t.nav_nos) navNos.textContent = t.nav_nos;
-        if (t.nav_musicas) navMusicas.textContent = t.nav_musicas;
+        if (t.nav_people) navPeople.textContent = t.nav_people;
+        if (t.nav_musics) navMusics.textContent = t.nav_musics;
         if (t.nav_sobre) navSobre.textContent = t.nav_sobre;
     }
 }
@@ -160,9 +163,33 @@ function reloadContent() {
     // Reload welcome content and markers
     loadWelcomeContent();
     clearMarkers();
-    loadCSV();
+    loadCSV(currentView);
 
     console.log(`Language changed to: ${currentLanguage}`);
+}
+
+/**
+ * Switch between musics and people views
+ */
+function switchView(view) {
+    if (view === currentView) return;
+
+    currentView = view;
+
+    // Update active states
+    if (view === 'musics') {
+        navMusics.classList.add('active');
+        navPeople.classList.remove('active');
+    } else {
+        navPeople.classList.add('active');
+        navMusics.classList.remove('active');
+    }
+
+    // Clear markers and load new CSV
+    clearMarkers();
+    loadCSV(view);
+
+    console.log(`Switched to ${view} view`);
 }
 
 /**
@@ -298,6 +325,26 @@ function setupWelcomeModalEvents() {
     navSobre.addEventListener('click', handleSobreClick);
     navSobre.addEventListener('touchend', handleSobreClick);
 
+    // Musics link click - switch to musics view
+    const handleMusicsClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        switchView('musics');
+    };
+
+    navMusics.addEventListener('click', handleMusicsClick);
+    navMusics.addEventListener('touchend', handleMusicsClick);
+
+    // People link click - switch to people view
+    const handlePeopleClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        switchView('people');
+    };
+
+    navPeople.addEventListener('click', handlePeopleClick);
+    navPeople.addEventListener('touchend', handlePeopleClick);
+
     // Language toggle click - show/hide dropdown
     const handleLanguageToggle = (e) => {
         e.preventDefault();
@@ -426,11 +473,12 @@ function initMap() {
 }
 
 /**
- * Load and parse CSV file
+ * Load and parse CSV file based on current view
  */
-async function loadCSV() {
+async function loadCSV(view = currentView) {
     try {
-        const response = await fetch('data/musics.csv');
+        const csvFile = view === 'people' ? 'data/people.csv' : 'data/musics.csv';
+        const response = await fetch(csvFile);
 
         if (!response.ok) {
             throw new Error(`Failed to load CSV: ${response.statusText}`);
@@ -443,7 +491,7 @@ async function loadCSV() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                console.log('CSV parsed successfully:', results.data.length, 'musics');
+                console.log(`CSV parsed successfully: ${results.data.length} ${view}`);
                 addMarkersToMap(results.data);
                 hideLoading();
             },
@@ -456,7 +504,7 @@ async function loadCSV() {
     } catch (error) {
         console.error('Error loading CSV:', error);
         hideLoading();
-        alert('Error loading CSV file. Please ensure data/musics.csv exists.');
+        alert(`Error loading CSV file. Please ensure data/${view}.csv exists.`);
     }
 }
 
@@ -553,9 +601,12 @@ function addMarkersToMap(data) {
         // Get non-language-specific fields
         const {
             id, lat, lng,
+            // Music fields
             country_name, country_flag,
             song_name, song_author, audio,
-            teacher_name, teacher_photo, teacher_link
+            teacher_name, teacher_photo, teacher_link,
+            // People fields
+            state, city, neighborhood, person_name, person_photo
         } = row;
 
         // Validate required fields
@@ -578,6 +629,7 @@ function addMarkersToMap(data) {
             id: id || index,
             latitude,
             longitude,
+            // Music fields
             countryName: country_name,
             countryFlag: country_flag,
             countryDescription,
@@ -588,7 +640,13 @@ function addMarkersToMap(data) {
             teacherName: teacher_name,
             teacherPhoto: teacher_photo,
             teacherBio,
-            teacherLink: teacher_link
+            teacherLink: teacher_link,
+            // People fields
+            state,
+            city,
+            neighborhood,
+            person_name,
+            person_photo
         };
     }).filter(item => item !== null);
 
@@ -599,7 +657,10 @@ function addMarkersToMap(data) {
     offsetMarkers.forEach(markerData => {
         const { latitude, longitude } = markerData;
 
-        console.log(`Marker ${markerData.index + 1} (${currentLanguage}): ${markerData.songName} - ${markerData.countryName} [${latitude.toFixed(2)}, ${longitude.toFixed(2)}]`);
+        const markerLabel = currentView === 'people'
+            ? `${markerData.person_name} - ${markerData.neighborhood}`
+            : `${markerData.songName} - ${markerData.countryName}`;
+        console.log(`Marker ${markerData.index + 1} (${currentLanguage}): ${markerLabel} [${latitude.toFixed(2)}, ${longitude.toFixed(2)}]`);
 
         // Create marker with custom artistic icon
         const marker = L.marker([latitude, longitude], {
@@ -607,20 +668,7 @@ function addMarkersToMap(data) {
         })
             .addTo(map)
             .on('click', () => {
-                openModal({
-                    id: markerData.id,
-                    countryName: markerData.countryName,
-                    countryFlag: markerData.countryFlag,
-                    countryDescription: markerData.countryDescription,
-                    songName: markerData.songName,
-                    songAuthor: markerData.songAuthor,
-                    songDescription: markerData.songDescription,
-                    audio: markerData.audio,
-                    teacherName: markerData.teacherName,
-                    teacherPhoto: markerData.teacherPhoto,
-                    teacherBio: markerData.teacherBio,
-                    teacherLink: markerData.teacherLink
-                });
+                openModal(markerData);
             });
 
         markers.push(marker);
@@ -639,11 +687,79 @@ function addMarkersToMap(data) {
  * Open modal with marker details
  */
 function openModal(markerData) {
+    // Check if this is people or musics data
+    if (currentView === 'people') {
+        openPeopleModal(markerData);
+    } else {
+        openMusicsModal(markerData);
+    }
+}
+
+/**
+ * Open modal for people data
+ */
+function openPeopleModal(markerData) {
+    const { state, city, neighborhood, person_name, person_photo } = markerData;
+
+    // Hide music-specific sections
+    document.querySelector('.song-section').style.display = 'none';
+    document.querySelector('.audio-container').classList.add('hidden');
+
+    // Show and update country section (reused for location)
+    const countrySection = document.querySelector('.country-section');
+    countrySection.style.display = 'block';
+    document.getElementById('modal-country-flag').textContent = '';
+
+    // Display location as "Neighborhood, City - State"
+    const location = [neighborhood, city, state].filter(Boolean).join(', ');
+    document.getElementById('modal-country-name').textContent = location || '';
+    document.getElementById('modal-country-description').textContent = '';
+
+    // Show and update teacher section (reused for person)
+    const teacherSection = document.querySelector('.teacher-section');
+    teacherSection.style.display = 'block';
+    document.getElementById('modal-teacher-subtitle').textContent = '';
+    document.getElementById('modal-teacher-name').textContent = person_name || '';
+    document.getElementById('modal-teacher-bio').textContent = '';
+
+    // Set person photo
+    const teacherPhotoContainer = document.getElementById('modal-teacher-photo-container');
+    const teacherPhotoEl = document.getElementById('modal-teacher-photo');
+    if (person_photo) {
+        teacherPhotoEl.src = `media/images/people/${person_photo}`;
+        teacherPhotoEl.alt = person_name || 'Person';
+        teacherPhotoContainer.classList.remove('hidden');
+
+        teacherPhotoEl.onerror = () => {
+            console.warn(`Failed to load person photo: ${person_photo}`);
+            teacherPhotoContainer.classList.add('hidden');
+        };
+    } else {
+        teacherPhotoContainer.classList.add('hidden');
+    }
+
+    // Hide teacher link
+    document.getElementById('modal-teacher-link').style.display = 'none';
+
+    // Show modal
+    modal.classList.add('show');
+    modal.style.display = 'flex';
+}
+
+/**
+ * Open modal for musics data
+ */
+function openMusicsModal(markerData) {
     const {
         countryName, countryFlag, countryDescription,
         songName, songAuthor, songDescription, audio,
         teacherName, teacherPhoto, teacherBio, teacherLink
     } = markerData;
+
+    // Show all sections
+    document.querySelector('.song-section').style.display = 'block';
+    document.querySelector('.country-section').style.display = 'block';
+    document.querySelector('.teacher-section').style.display = 'block';
 
     // Set UI translations based on current language
     const t = translations[currentLanguage] || translations['en_us'];
@@ -781,6 +897,10 @@ function init() {
     initMap();
     setupModalEvents();
     setupWelcomeModalEvents();
+
+    // Set initial active state for musics view
+    navMusics.classList.add('active');
+
     loadUITranslations();
     loadLanguages();
     loadCSV();

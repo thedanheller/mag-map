@@ -74,6 +74,11 @@ body {
     background: rgba(0, 0, 0, 0.05);
 }
 
+.nav-link.active {
+    background: rgba(0, 0, 0, 0.1);
+    font-weight: 700;
+}
+
 .nav-link.secondary {
     font-weight: 400;
     font-size: 0.95rem;
