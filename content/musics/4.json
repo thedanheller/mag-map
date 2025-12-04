@@ -1,0 +1,38 @@
+{
+  "country_description": {
+    "pt_br": "A Colômbia é rica em gêneros musicais como a cumbia, o vallenato e o bambuco. A música colombiana reflete a diversidade cultural e geográfica do país.",
+    "es_es": "Colombia es rica en géneros musicales como la cumbia, el vallenato y el bambuco. La música colombiana refleja la diversidad cultural y geográfica del país.",
+    "en_us": "Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "zh_cn": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "hi_in": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "fr_fr": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "ar_sa": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "bn_bd": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "ur_pk": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity.",
+    "id_id": "[TRANSLATE] Colombia is rich in musical genres like cumbia, vallenato, and bambuco. Colombian music reflects the country's cultural and geographical diversity."
+  },
+  "song_description": {
+    "pt_br": "História de Rosario Torres, mulher valente que se tornou símbolo latino do empoderamento feminino. Nasce nas montanhas colombianas no século 18, durante lutas pela independência. Ritmo Bambuco Sueño da Colômbia andina.",
+    "es_es": "Historia de Rosario Torres, mujer valiente que se convirtió en símbolo latino del empoderamiento femenino. Nace en las montañas colombianas en el siglo 18, durante luchas por la independencia. Ritmo Bambuco Sueño de Colombia andina.",
+    "en_us": "Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "zh_cn": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "hi_in": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "fr_fr": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "ar_sa": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "bn_bd": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "ur_pk": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia.",
+    "id_id": "[TRANSLATE] Story of Rosario Torres, a brave woman who became a Latin symbol of female empowerment. Born in the Colombian mountains in the 18th century, during independence struggles. Bambuco Sueño rhythm from Andean Colombia."
+  },
+  "teacher_bio": {
+    "pt_br": "Músico colombiano de passagem pelo Brasil. Ensinou aos Magníficos o contagiante ritmo Bambuco Sueño como forma de agradecer a acolhida que teve durante catorze meses de viagem.",
+    "es_es": "Músico colombiano de paso por Brasil. Enseñó a los Magníficos el contagioso ritmo Bambuco Sueño como forma de agradecer la acogida que tuvo durante catorce meses de viaje.",
+    "en_us": "Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "zh_cn": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "hi_in": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "fr_fr": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "ar_sa": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "bn_bd": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "ur_pk": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel.",
+    "id_id": "[TRANSLATE] Colombian musician passing through Brazil. Taught Magníficos the infectious Bambuco Sueño rhythm as a way to thank the welcome he received during fourteen months of travel."
+  }
+}
