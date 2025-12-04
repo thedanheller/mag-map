@@ -232,7 +232,7 @@ function displayWelcomeModal(data) {
     const imageContainer = document.getElementById('welcome-image-container');
     const imageEl = document.getElementById('welcome-image');
     if (image && image.trim()) {
-        imageEl.src = image.trim();
+        imageEl.src = `media/images/${image.trim()}`;
         imageEl.alt = title || 'Welcome';
         imageContainer.classList.remove('hidden');
 
@@ -430,7 +430,7 @@ function initMap() {
  */
 async function loadCSV() {
     try {
-        const response = await fetch('data/markers.csv');
+        const response = await fetch('data/musics.csv');
 
         if (!response.ok) {
             throw new Error(`Failed to load CSV: ${response.statusText}`);
@@ -443,7 +443,7 @@ async function loadCSV() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                console.log('CSV parsed successfully:', results.data.length, 'markers');
+                console.log('CSV parsed successfully:', results.data.length, 'musics');
                 addMarkersToMap(results.data);
                 hideLoading();
             },
@@ -456,7 +456,7 @@ async function loadCSV() {
     } catch (error) {
         console.error('Error loading CSV:', error);
         hideLoading();
-        alert('Error loading CSV file. Please ensure data/markers.csv exists.');
+        alert('Error loading CSV file. Please ensure data/musics.csv exists.');
     }
 }
 
@@ -673,7 +673,7 @@ function openModal(markerData) {
     const audioContainer = document.getElementById('modal-audio-container');
     const audioEl = document.getElementById('modal-audio');
     if (audio) {
-        audioEl.src = audio;
+        audioEl.src = `media/audio/${audio}`;
         audioContainer.classList.remove('hidden');
 
         // Handle audio load error
@@ -693,7 +693,7 @@ function openModal(markerData) {
     const teacherPhotoContainer = document.getElementById('modal-teacher-photo-container');
     const teacherPhotoEl = document.getElementById('modal-teacher-photo');
     if (teacherPhoto) {
-        teacherPhotoEl.src = teacherPhoto;
+        teacherPhotoEl.src = `media/images/teachers/${teacherPhoto}`;
         teacherPhotoEl.alt = teacherName || 'Teacher';
         teacherPhotoContainer.classList.remove('hidden');
 
