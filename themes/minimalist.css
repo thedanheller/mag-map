@@ -21,16 +21,24 @@ body {
     color: var(--text-primary);
 }
 
-/* Logo Circle Theme */
-.logo-circle {
+/* Top Bar Theme */
+.top-bar {
     background: var(--background-light);
     box-shadow: 0 2px 8px var(--shadow-color);
-    border: 1px solid var(--border-color);
+    border-bottom: 1px solid var(--border-color);
 }
 
-.logo-circle:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
-    border-color: var(--border-dark);
+.nav-link {
+    color: var(--text-primary);
+}
+
+.nav-link:hover {
+    background: var(--background-gray);
+    color: var(--primary-color);
+}
+
+.nav-link.secondary {
+    color: var(--text-secondary);
 }
 
 /* Language Dropdown Theme */

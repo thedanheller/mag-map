@@ -9,7 +9,7 @@ let markers = [];
 const modal = document.getElementById('modal');
 const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
-const logoCircle = document.getElementById('logo-circle');
+const logoContainer = document.querySelector('.logo-container');
 const welcomeLanguageSelect = document.getElementById('welcome-language-select');
 
 // Current selected language (default to Portuguese)
@@ -30,7 +30,7 @@ let translations = {};
 // - stadia: Artistic watercolor style (requires free API key, 25k views/month)
 // - cartodb: Clean & simple (free, unlimited, no API key)
 // - google: High quality roads/satellite (requires API key, $200 free credit/month)
-const MAP_PROVIDER = 'cartodb';
+const MAP_PROVIDER = 'stadia';
 
 /**
  * Load UI translations from CSV
@@ -272,8 +272,8 @@ function setupWelcomeModalEvents() {
         openWelcomeModal();
     };
 
-    logoCircle.addEventListener('click', handleLogoClick);
-    logoCircle.addEventListener('touchend', handleLogoClick);
+    logoContainer.addEventListener('click', handleLogoClick);
+    logoContainer.addEventListener('touchend', handleLogoClick);
 
     // Escape key
     document.addEventListener('keydown', (e) => {

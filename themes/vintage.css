@@ -22,18 +22,25 @@ body {
     color: var(--text-primary);
 }
 
-/* Logo Circle Theme */
-.logo-circle {
-    background: #FFFFFF;
+/* Top Bar Theme */
+.top-bar {
+    background: linear-gradient(180deg, var(--background-light) 0%, var(--background-cream) 100%);
     box-shadow: 0 4px 15px var(--shadow-color),
                 inset 0 1px 0 rgba(255, 255, 255, 0.6);
-    border: 3px solid var(--border-color);
+    border-bottom: 3px solid var(--border-color);
 }
 
-.logo-circle:hover {
-    box-shadow: 0 6px 20px rgba(62, 39, 35, 0.4),
-                inset 0 1px 0 rgba(255, 255, 255, 0.8);
-    border-color: rgba(139, 69, 19, 0.4);
+.nav-link {
+    color: var(--text-primary);
+}
+
+.nav-link:hover {
+    background: rgba(139, 69, 19, 0.1);
+    color: var(--primary-dark);
+}
+
+.nav-link.secondary {
+    color: var(--text-secondary);
 }
 
 /* Language Dropdown Theme */
