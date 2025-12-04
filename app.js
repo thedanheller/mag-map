@@ -11,6 +11,8 @@ const loading = document.getElementById('loading');
 const welcomeModal = document.getElementById('welcome-modal');
 const logoContainer = document.querySelector('.logo-container');
 const welcomeLanguageSelect = document.getElementById('welcome-language-select');
+const navLanguageSelect = document.getElementById('nav-language-select');
+const languageToggle = document.querySelector('.language-toggle');
 
 // Current selected language (default to Portuguese)
 let currentLanguage = 'pt_br';
@@ -96,22 +98,34 @@ async function loadLanguages() {
             header: true,
             skipEmptyLines: true,
             complete: function(results) {
-                // Clear loading options from dropdown
+                // Clear loading options from dropdowns
                 welcomeLanguageSelect.innerHTML = '';
+                navLanguageSelect.innerHTML = '';
 
-                // Populate dropdown with languages
+                // Populate both dropdowns with languages
                 results.data.forEach(lang => {
-                    const option = document.createElement('option');
-                    option.value = lang.id;
-                    option.textContent = lang.name;
+                    // Welcome modal dropdown
+                    const option1 = document.createElement('option');
+                    option1.value = lang.id;
+                    option1.textContent = lang.name;
                     if (lang.id === currentLanguage) {
-                        option.selected = true;
+                        option1.selected = true;
                     }
-                    welcomeLanguageSelect.appendChild(option);
+                    welcomeLanguageSelect.appendChild(option1);
+
+                    // Navigation dropdown
+                    const option2 = document.createElement('option');
+                    option2.value = lang.id;
+                    option2.textContent = lang.name;
+                    if (lang.id === currentLanguage) {
+                        option2.selected = true;
+                    }
+                    navLanguageSelect.appendChild(option2);
                 });
 
-                // Add change event listener
+                // Add change event listeners
                 welcomeLanguageSelect.addEventListener('change', handleLanguageChange);
+                navLanguageSelect.addEventListener('change', handleLanguageChange);
             },
             error: function(error) {
                 console.error('Error parsing languages CSV:', error);
@@ -127,6 +141,11 @@ async function loadLanguages() {
  */
 function handleLanguageChange(e) {
     currentLanguage = e.target.value;
+
+    // Sync both dropdowns
+    welcomeLanguageSelect.value = currentLanguage;
+    navLanguageSelect.value = currentLanguage;
+
     reloadContent();
 }
 
@@ -275,10 +294,34 @@ function setupWelcomeModalEvents() {
     logoContainer.addEventListener('click', handleLogoClick);
     logoContainer.addEventListener('touchend', handleLogoClick);
 
+    // Language toggle click - show/hide dropdown
+    const handleLanguageToggle = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+        navLanguageSelect.classList.toggle('show');
+    };
+
+    languageToggle.addEventListener('click', handleLanguageToggle);
+
+    // Close language dropdown when clicking outside
+    document.addEventListener('click', (e) => {
+        if (!e.target.closest('.language-selector')) {
+            navLanguageSelect.classList.remove('show');
+        }
+    });
+
+    // Close dropdown when a language is selected
+    navLanguageSelect.addEventListener('change', () => {
+        navLanguageSelect.classList.remove('show');
+    });
+
     // Escape key
     document.addEventListener('keydown', (e) => {
         if (e.key === 'Escape' && welcomeModal.style.display === 'flex') {
             closeWelcomeModal();
+        }
+        if (e.key === 'Escape' && navLanguageSelect.classList.contains('show')) {
+            navLanguageSelect.classList.remove('show');
         }
     });
 }
