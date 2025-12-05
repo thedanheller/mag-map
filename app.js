@@ -151,7 +151,9 @@ async function init() {
     // Load initial data (musics view)
     showLoading();
     try {
-        const musicsData = await loadMusicsCSV();
+        const rawMusicsData = await loadMusicsCSV();
+
+        const musicsData = rawMusicsData.filter((music) => JSON.parse(music.enabled));
         createMarkers(musicsData, 'musics', 'pt_br');
         hideLoading();
     } catch (error) {

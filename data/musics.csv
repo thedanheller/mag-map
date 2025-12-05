@@ -1,17 +1,17 @@
-id,lat,lng,country_name,country_flag,song_name,song_author,audio,teacher_name,teacher_photo,teacher_link
-1,39.9042,116.4074,China,🇨🇳,Bài Nián (拜年),Traditional,bai-nian.mp3,Tony Lee,tony-lee.jpg,
-2,28.6139,77.2090,India,🇮🇳,Raghupati Raghav Raja Ram,Mahatma Gandhi (popularizou),raghupati.mp3,Ratnabali,ratnabali.jpg,
-3,32.4279,53.6880,Iran,🇮🇷,Mastom Mastom,Traditional,mastom.mp3,Mah Mooni e Arash Azadeh,mah-mooni-arash.jpg,
-4,4.5709,-74.2973,Colombia,🇨🇴,La Guaneña,Traditional,la-guanena.mp3,Santiago Quesada,santiago-quesada.jpg,
-5,34.5553,69.2075,Afghanistan,🇦🇫,Molla Mammad Jaan,Traditional,molla-mammad.mp3,Kawa Mo,kawa-mo.jpg,
-6,-13.5320,-71.9675,Peru,🇵🇪,Valicha,Miguel Angel Hurtado,valicha.mp3,Martha Galdós,martha-galdos.jpg,
-7,-15.7942,-47.8822,Brazil,🇧🇷,Tembi'u Porã,Traditional Guarani,tembiu-pora.mp3,Tainara Takua,tainara-takua.jpg,
-8,-15.8042,-47.8922,Brazil,🇧🇷,Quando a Morena,Gabriel Levy,quando-morena.mp3,Gabriel Levy,gabriel-levy.jpg,
-9,-15.8142,-47.9022,Brazil,🇧🇷,Sou Brasileiro,Traditional (Candomblé de Caboclo),sou-brasileiro.mp3,Vitor da Trindade,vitor-trindade.jpg,
-10,31.9522,35.2332,Palestine,🇵🇸,Wayn a Ramallah,Traditional,wayn-ramalah.mp3,Yousef Saif,yousef-saif.jpg,
-11,-4.0383,21.7587,DR Congo,🇨🇩,Mbomboliye,Traditional,mbomboliye.mp3,Leonardo Matumona,leonardo-matumona.jpg,
-12,37.9838,23.7275,Greece,🇬🇷,Misirlou,Traditional,misirlou.mp3,Katerina Douka,katerina-douka.jpg,https://www.youtube.com/watch?v=Jdt6AY30DIQ
-13,33.8938,35.5018,Lebanon,🇱🇧,Ala Dalouna,Traditional Árabe,ala-dalaouna.mp3,Jihad Smaili,jihad-smaili.jpg,
-14,36.5000,44.0000,Kurdistan,🟡🔴🟢,Kelesho,Traditional,kelesho.mp3,Arjen Brus,arjen-brus.jpg,
-15,35.6762,139.6503,Japan,🇯🇵,Souma Bon Uta,Traditional,souma-bon.mp3,Sérgio Tück,sergio-tuck.jpg,
-16,6.5244,-66.5897,Venezuela,🇻🇪,Pajarillo Verde,Traditional,pajarillo.mp3,Fran Castellar,fran-castellar.jpg,
+id,lat,lng,country_name,country_flag,song_name,song_author,audio,teacher_name,teacher_photo,teacher_link,enabled
+1,39.9042,116.4074,China,🇨🇳,Bài Nián (拜年),Traditional,bai-nian.mp3,Tony Lee,tony-lee.jpg,,false
+2,28.6139,77.2090,India,🇮🇳,Raghupati Raghav Raja Ram,Mahatma Gandhi (popularizou),raghupati.mp3,Ratnabali,ratnabali.jpg,,false
+3,32.4279,53.6880,Iran,🇮🇷,Mastom Mastom,Traditional,mastom.mp3,Mah Mooni e Arash Azadeh,mah-mooni-arash.jpg,,false
+4,4.5709,-74.2973,Colombia,🇨🇴,La Guaneña,Traditional,la-guanena.mp3,Santiago Quesada,santiago-quesada.jpg,,false
+5,34.5553,69.2075,Afghanistan,🇦🇫,Molla Mammad Jaan,Traditional,molla-mammad.mp3,Kawa Mo,kawa-mo.jpg,,true
+6,-13.5320,-71.9675,Peru,🇵🇪,Valicha,Miguel Angel Hurtado,valicha.mp3,Martha Galdós,martha-galdos.jpg,,true
+7,-15.7942,-47.8822,Brazil,🇧🇷,Tembi'u Porã,Traditional Guarani,tembiu-pora.mp3,Tainara Takua,tainara-takua.jpg,,false
+8,-15.8042,-47.8922,Brazil,🇧🇷,Quando a Morena,Gabriel Levy,quando-morena.mp3,Gabriel Levy,gabriel-levy.jpg,,true
+9,-15.8142,-47.9022,Brazil,🇧🇷,Sou Brasileiro,Traditional (Candomblé de Caboclo),sou-brasileiro.mp3,Vitor da Trindade,vitor-trindade.jpg,,false
+10,31.9522,35.2332,Palestine,🇵🇸,Wayn a Ramallah,Traditional,wayn-ramalah.mp3,Yousef Saif,yousef-saif.jpg,,true
+11,-4.0383,21.7587,DR Congo,🇨🇩,Mbomboliye,Traditional,mbomboliye.mp3,Leonardo Matumona,leonardo-matumona.jpg,,true
+12,37.9838,23.7275,Greece,🇬🇷,Misirlou,Traditional,misirlou.mp3,Katerina Douka,katerina-douka.jpg,https://www.youtube.com/watch?v=Jdt6AY30DIQ,true
+13,33.8938,35.5018,Lebanon,🇱🇧,Ala Dalouna,Traditional Árabe,ala-dalaouna.mp3,Jihad Smaili,jihad-smaili.jpg,,false
+14,36.5000,44.0000,Kurdistan,🟡🔴🟢,Kelesho,Traditional,kelesho.mp3,Arjen Brus,arjen-brus.jpg,,true
+15,35.6762,139.6503,Japan,🇯🇵,Souma Bon Uta,Traditional,souma-bon.mp3,Sérgio Tück,sergio-tuck.jpg,,true
+16,6.5244,-66.5897,Venezuela,🇻🇪,Pajarillo Verde,Traditional,pajarillo.mp3,Fran Castellar,fran-castellar.jpg,,true

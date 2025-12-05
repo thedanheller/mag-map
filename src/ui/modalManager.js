@@ -94,7 +94,7 @@ function openMusicsModal(data, language) {
     // Set country information
     document.getElementById('modal-country-flag').textContent = country_flag || '';
     document.getElementById('modal-country-name').textContent = country_name || '';
-    document.getElementById('modal-country-description').textContent = content.countryDescription || '';
+    // document.getElementById('modal-country-description').textContent = content.countryDescription || '';
 
     // Set song information
     document.getElementById('modal-song-name').textContent = song_name || '';
@@ -117,6 +117,11 @@ function openMusicsModal(data, language) {
         audioEl.src = `media/audio/${audio}`;
         audioContainer.classList.remove('hidden');
 
+        // Auto-play audio when modal opens
+        audioEl.play().catch(error => {
+            console.warn(`Auto-play prevented: ${error.message}`);
+        });
+
         audioEl.onerror = () => {
             console.warn(`Failed to load audio: ${audio}`);
             audioContainer.classList.add('hidden');
@@ -127,7 +132,7 @@ function openMusicsModal(data, language) {
 
     // Set teacher information
     document.getElementById('modal-teacher-name').textContent = teacher_name || '';
-    document.getElementById('modal-teacher-bio').textContent = content.teacherBio || '';
+    // document.getElementById('modal-teacher-bio').textContent = content.teacherBio || '';
 
     // Set teacher photo
     const teacherPhotoContainer = document.getElementById('modal-teacher-photo-container');
